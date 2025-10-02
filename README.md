@@ -60,6 +60,17 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## How can the site owner add listings without Supabase?
+
+Visit `/admin` to open the private owner form. The UI lets the owner publish a new property without touching Supabase directly.
+
+Before using the page:
+
+1. **Set an owner passcode** – add `VITE_ADMIN_PASSCODE=<secure value>` to your local `.env` file and deployment environment. The form requires this passcode before it will submit anything to Supabase.
+2. **Grant Supabase insert access** – update your Row Level Security policies so the owner’s authenticated user (or a service role key used by your hosting provider) can `INSERT` into the `public.properties` table. If no policy allows inserts, Supabase will reject submissions from the admin form.
+
+After configuring those two items, sign in as the owner, open `/admin`, complete the property details, and click **Publish listing**. The React app uses the same Supabase client as the public site, so the new record appears instantly on the home page.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/658e2726-9e13-4d9b-9343-0d9f77b2d9fd) and click on Share -> Publish.
