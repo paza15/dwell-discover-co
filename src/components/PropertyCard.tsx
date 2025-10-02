@@ -1,0 +1,61 @@
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { BedDouble, Bath, Square, MapPin } from "lucide-react";
+
+interface PropertyCardProps {
+  image: string;
+  price: string;
+  title: string;
+  location: string;
+  beds: number;
+  baths: number;
+  sqft: number;
+  status?: "For Sale" | "For Rent";
+}
+
+const PropertyCard = ({ image, price, title, location, beds, baths, sqft, status = "For Sale" }: PropertyCardProps) => {
+  return (
+    <Card className="overflow-hidden group cursor-pointer border-border hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)]">
+      <div className="relative h-64 overflow-hidden">
+        <img 
+          src={image} 
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground font-semibold">
+          {status}
+        </Badge>
+      </div>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-2xl font-bold text-primary">{price}</h3>
+        </div>
+        <h4 className="text-xl font-semibold mb-2 text-foreground">{title}</h4>
+        <div className="flex items-center text-muted-foreground mb-4">
+          <MapPin className="w-4 h-4 mr-1" />
+          <span className="text-sm">{location}</span>
+        </div>
+        <div className="flex items-center gap-4 mb-4 text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <BedDouble className="w-4 h-4" />
+            <span className="text-sm">{beds} Beds</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Bath className="w-4 h-4" />
+            <span className="text-sm">{baths} Baths</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Square className="w-4 h-4" />
+            <span className="text-sm">{sqft} sqft</span>
+          </div>
+        </div>
+        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+          View Details
+        </Button>
+      </div>
+    </Card>
+  );
+};
+
+export default PropertyCard;
