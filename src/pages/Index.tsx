@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
 import { Button } from "@/components/ui/button";
@@ -8,38 +10,37 @@ import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
 
 const Index = () => {
-  const featuredProperties = [
-    {
-      image: property1,
-      price: "$850,000",
-      title: "Modern Luxury Villa",
-      location: "Beverly Hills, CA",
-      beds: 4,
-      baths: 3,
-      sqft: 3200,
-      status: "For Sale" as const,
+  // Fetch properties from database
+  const { data: properties, isLoading } = useQuery({
+    queryKey: ['properties'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
     },
-    {
-      image: property2,
-      price: "$525,000",
-      title: "Charming Family Home",
-      location: "Austin, TX",
-      beds: 3,
-      baths: 2,
-      sqft: 2400,
-      status: "For Sale" as const,
-    },
-    {
-      image: property3,
-      price: "$3,200/mo",
-      title: "Downtown Luxury Condo",
-      location: "Seattle, WA",
-      beds: 2,
-      baths: 2,
-      sqft: 1800,
-      status: "For Rent" as const,
-    },
-  ];
+  });
+
+  // Map image URLs to imported assets
+  const getImageForProperty = (imageUrl: string) => {
+    const imageMap: Record<string, string> = {
+      'property-1.jpg': property1,
+      'property-2.jpg': property2,
+      'property-3.jpg': property3,
+    };
+    return imageMap[imageUrl] || property1;
+  };
+
+  // Format price based on status
+  const formatPrice = (price: number, status: string) => {
+    if (status === 'For Rent') {
+      return `$${price.toLocaleString()}/mo`;
+    }
+    return `$${price.toLocaleString()}`;
+  };
 
   const services = [
     {
@@ -94,16 +95,34 @@ const Index = () => {
               Handpicked properties that match your dreams
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProperties.map((property, index) => (
-              <PropertyCard key={index} {...property} />
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              View All Properties
-            </Button>
-          </div>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading properties...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {properties?.slice(0, 6).map((property) => (
+                  <PropertyCard 
+                    key={property.id}
+                    image={getImageForProperty(property.image_url || '')}
+                    price={formatPrice(property.price, property.status)}
+                    title={property.title}
+                    location={property.location}
+                    beds={property.beds}
+                    baths={property.baths}
+                    sqft={property.sqft}
+                    status={property.status as "For Sale" | "For Rent"}
+                  />
+                ))}
+              </div>
+              <div className="text-center mt-12">
+                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                  View All Properties
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
