@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
@@ -75,6 +76,9 @@ const Index = () => {
               <a href="#" className="text-white hover:text-accent transition-colors">Rent</a>
               <a href="#" className="text-white hover:text-accent transition-colors">Sell</a>
               <a href="#" className="text-white hover:text-accent transition-colors">About</a>
+              <Link to="/admin" className="text-white/80 hover:text-accent transition-colors">
+                Owner Portal
+              </Link>
               <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
                 Contact Us
               </Button>
