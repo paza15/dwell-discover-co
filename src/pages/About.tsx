@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Home, Users, Award, TrendingUp } from "lucide-react";
 
 const About = () => {
+  const { t } = useLanguage();
+  
   const stats = [
-    { icon: Home, value: "500+", label: "Properties Sold" },
-    { icon: Users, value: "1000+", label: "Happy Clients" },
-    { icon: Award, value: "15+", label: "Years Experience" },
-    { icon: TrendingUp, value: "98%", label: "Customer Satisfaction" },
+    { icon: Home, value: "500+", label: t('propertiesSold') },
+    { icon: Users, value: "1000+", label: t('happyClients') },
+    { icon: Award, value: "15+", label: t('yearsExperience') },
+    { icon: TrendingUp, value: "98%", label: t('customerSatisfaction') },
   ];
 
   return (
@@ -22,11 +26,12 @@ const About = () => {
               <span className="text-2xl font-bold">EstateHub</span>
             </Link>
             <div className="flex items-center gap-6">
-              <Link to="/buy" className="hover:text-accent transition-colors">Buy</Link>
-              <Link to="/rent" className="hover:text-accent transition-colors">Rent</Link>
-              <Link to="/about" className="hover:text-accent transition-colors">About</Link>
+              <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
+              <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/about" className="hover:text-accent transition-colors">{t('about')}</Link>
+              <LanguageSwitcher />
               <Button variant="secondary" asChild>
-                <Link to="/contact">Contact Us</Link>
+                <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
           </div>
@@ -36,9 +41,9 @@ const About = () => {
       {/* Hero Section */}
       <section className="py-20 bg-[image:var(--gradient-hero)] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">About EstateHub</h1>
+          <h1 className="text-5xl font-bold mb-6">{t('aboutEstateHub')}</h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Your trusted partner in finding the perfect property
+            {t('trustedPartner')}
           </p>
         </div>
       </section>
@@ -47,15 +52,12 @@ const About = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-bold text-foreground mb-6">Our Story</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-6">{t('ourStory')}</h2>
             <p className="text-muted-foreground text-lg mb-6">
-              Founded in 2010, EstateHub has been helping families and individuals find their dream homes for over a decade. 
-              Our commitment to excellence and personalized service has made us one of the most trusted names in real estate.
+              {t('storyText1')}
             </p>
             <p className="text-muted-foreground text-lg">
-              We believe that finding a home is more than just a transaction—it's about finding a place where memories are made 
-              and futures are built. Our team of dedicated professionals works tirelessly to ensure every client finds exactly 
-              what they're looking for.
+              {t('storyText2')}
             </p>
           </div>
         </div>
@@ -81,24 +83,24 @@ const About = () => {
       {/* Values Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-foreground text-center mb-12">Our Values</h2>
+          <h2 className="text-4xl font-bold text-foreground text-center mb-12">{t('ourValues')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="p-8 border-border">
-              <h3 className="text-2xl font-semibold text-foreground mb-3">Integrity</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-3">{t('integrity')}</h3>
               <p className="text-muted-foreground">
-                We uphold the highest standards of honesty and transparency in every interaction.
+                {t('integrityText')}
               </p>
             </Card>
             <Card className="p-8 border-border">
-              <h3 className="text-2xl font-semibold text-foreground mb-3">Excellence</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-3">{t('excellence')}</h3>
               <p className="text-muted-foreground">
-                We strive for excellence in every service we provide, ensuring the best outcomes for our clients.
+                {t('excellenceText')}
               </p>
             </Card>
             <Card className="p-8 border-border">
-              <h3 className="text-2xl font-semibold text-foreground mb-3">Community</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-3">{t('community')}</h3>
               <p className="text-muted-foreground">
-                We're committed to building stronger communities, one home at a time.
+                {t('communityText')}
               </p>
             </Card>
           </div>
@@ -108,12 +110,12 @@ const About = () => {
       {/* CTA Section */}
       <section className="py-20 bg-[image:var(--gradient-hero)] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
+          <h2 className="text-4xl font-bold mb-6">{t('readyToStart')}</h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Let's find your perfect property together
+            {t('findPropertyTogether')}
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link to="/contact">Contact Us Today</Link>
+            <Link to="/contact">{t('contactUsToday')}</Link>
           </Button>
         </div>
       </section>

@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
@@ -11,6 +13,8 @@ import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
 
 const Index = () => {
+  const { t } = useLanguage();
+  
   // Fetch properties from database
   const { data: properties, isLoading } = useQuery({
     queryKey: ['properties'],
@@ -72,14 +76,15 @@ const Index = () => {
               <span className="text-2xl font-bold text-white">EstateHub</span>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <Link to="/buy" className="text-white hover:text-accent transition-colors">Buy</Link>
-              <Link to="/rent" className="text-white hover:text-accent transition-colors">Rent</Link>
-              <Link to="/about" className="text-white hover:text-accent transition-colors">About</Link>
+              <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
+              <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/about" className="text-white hover:text-accent transition-colors">{t('about')}</Link>
               <Link to="/admin" className="text-white/80 hover:text-accent transition-colors">
-                Owner Portal
+                {t('ownerPortal')}
               </Link>
+              <LanguageSwitcher />
               <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
-                <Link to="/contact">Contact Us</Link>
+                <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
           </div>
