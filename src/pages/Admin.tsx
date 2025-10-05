@@ -83,16 +83,22 @@ const Admin = () => {
         throw new Error("Incorrect owner passcode. Please try again.");
       }
 
-      const { adminPasscode: _adminPasscode, propertyType, imageUrl, description, ...rest } = values;
+      const { adminPasscode: _adminPasscode, propertyType, imageUrl, ...rest } = values;
 
       const payload = {
-        ...rest,
-        description: description?.trim() ? description.trim() : null,
-        property_type: propertyType.trim(),
-        image_url: imageUrl?.trim() ? imageUrl.trim() : null,
+        title: rest.title,
+        price: rest.price,
+        location: rest.location,
+        beds: rest.beds,
+        baths: rest.baths,
+        sqft: rest.sqft,
+        status: rest.status,
+        description: rest.description?.trim() || null,
+        property_type: propertyType.trim() || 'House',
+        image_url: imageUrl?.trim() || null,
       };
 
-      const { error } = await supabase.from("properties").insert(payload);
+      const { error } = await supabase.from("properties").insert([payload]);
 
       if (error) {
         throw error;

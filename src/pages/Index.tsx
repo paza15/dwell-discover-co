@@ -72,15 +72,14 @@ const Index = () => {
               <span className="text-2xl font-bold text-white">EstateHub</span>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-white hover:text-accent transition-colors">Buy</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">Rent</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">Sell</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">About</a>
+              <Link to="/buy" className="text-white hover:text-accent transition-colors">Buy</Link>
+              <Link to="/rent" className="text-white hover:text-accent transition-colors">Rent</Link>
+              <Link to="/about" className="text-white hover:text-accent transition-colors">About</Link>
               <Link to="/admin" className="text-white/80 hover:text-accent transition-colors">
                 Owner Portal
               </Link>
-              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                Contact Us
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+                <Link to="/contact">Contact Us</Link>
               </Button>
             </div>
           </div>
