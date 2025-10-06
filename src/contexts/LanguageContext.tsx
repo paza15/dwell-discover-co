@@ -98,6 +98,9 @@ const translations = {
     visitOffice: 'Visit Our Office',
     messageSent: 'Message sent!',
     getBackSoon: 'We\'ll get back to you as soon as possible.',
+    messageFailed: 'Unable to send message',
+    pleaseTryAgain: 'Please try again or reach out through another channel.',
+    sendingMessage: 'Sending...',
   },
   sq: {
     // Navigation
@@ -188,6 +191,9 @@ const translations = {
     visitOffice: 'Vizitoni Zyrën Tonë',
     messageSent: 'Mesazhi u dërgua!',
     getBackSoon: 'Ne do t\'ju përgjigjemi sa më shpejt të jetë e mundur.',
+    messageFailed: 'Mesazhi nuk mund të dërgohej',
+    pleaseTryAgain: 'Ju lutemi provoni përsëri ose na kontaktoni në një mënyrë tjetër.',
+    sendingMessage: 'Duke dërguar...',
   },
 };
 

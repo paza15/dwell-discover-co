@@ -71,6 +71,20 @@ Before using the page:
 
 After configuring those two items, sign in as the owner, open `/admin`, complete the property details, and click **Publish listing**. The React app uses the same Supabase client as the public site, so the new record appears instantly on the home page.
 
+## How does the contact form send emails?
+
+The contact form now calls a Supabase Edge Function that forwards each submission to your inbox via [Resend](https://resend.com/).
+To enable it in your own environment:
+
+1. Deploy the `send-contact-email` Edge Function (located in `supabase/functions/send-contact-email`).
+2. Add the following environment variables to the function:
+   - `RESEND_API_KEY` – an API key with permission to send emails.
+   - `CONTACT_RECIPIENT_EMAIL` – the inbox that should receive contact form messages.
+   - `CONTACT_FROM_EMAIL` *(optional)* – the verified sender address used in the "from" field. Defaults to the recipient address if omitted.
+3. Ensure your Supabase project's `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` values are available to the front-end so it can invoke the function.
+
+When a visitor submits the form, the app invokes the function with their name, email, phone, and message. The function validates the payload, sends the email through Resend, and returns success or an error that the UI surfaces to the visitor.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/658e2726-9e13-4d9b-9343-0d9f77b2d9fd) and click on Share -> Publish.
