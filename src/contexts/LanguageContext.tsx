@@ -47,6 +47,11 @@ const translations = {
     baths: 'Baths',
     sqft: 'sqft',
     viewDetails: 'View Details',
+    backToListings: 'Back to Listings',
+    description: 'Description',
+    noDescription: 'No description available for this property.',
+    ourAgents: 'Our Real Estate Agents',
+    ourAgentsDescription: 'Meet our experienced team of real estate professionals ready to help you find your perfect property.',
     
     // Buy Page
     propertiesForSale: 'Properties For Sale',
@@ -140,6 +145,11 @@ const translations = {
     baths: 'Banjo',
     sqft: 'm²',
     viewDetails: 'Shiko Detajet',
+    backToListings: 'Kthehu te Listat',
+    description: 'Përshkrimi',
+    noDescription: 'Nuk ka përshkrim të disponueshëm për këtë pronë.',
+    ourAgents: 'Agjentët Tanë të Pasurive të Paluajtshme',
+    ourAgentsDescription: 'Njihuni me ekipin tonë të përvuarëshem të profesionistëve të pasurive të paluajtshme të gatshëm t\'ju ndihmojnë të gjeni pronën tuaj të përsosur.',
     
     // Buy Page
     propertiesForSale: 'Prona Për Shitje',

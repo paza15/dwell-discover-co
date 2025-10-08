@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BedDouble, Bath, Square, MapPin } from "lucide-react";
 
 interface PropertyCardProps {
+  id: string;
   image: string;
   price: string;
   title: string;
@@ -14,9 +16,9 @@ interface PropertyCardProps {
   status?: "For Sale" | "For Rent";
 }
 
-const PropertyCard = ({ image, price, title, location, beds, baths, sqft, status = "For Sale" }: PropertyCardProps) => {
+const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, status = "For Sale" }: PropertyCardProps) => {
   return (
-    <Card className="overflow-hidden group cursor-pointer border-border hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)]">
+    <Card className="overflow-hidden group border-border hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)]">
       <div className="relative h-64 overflow-hidden">
         <img 
           src={image} 
@@ -50,8 +52,8 @@ const PropertyCard = ({ image, price, title, location, beds, baths, sqft, status
             <span className="text-sm">{sqft} sqft</span>
           </div>
         </div>
-        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-          View Details
+        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
+          <Link to={`/property/${id}`}>View Details</Link>
         </Button>
       </div>
     </Card>

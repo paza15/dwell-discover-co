@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
+import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
+import logo from "@/assets/logo.jpg";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -71,10 +73,9 @@ const Index = () => {
       <nav className="absolute top-0 left-0 right-0 z-20 bg-transparent">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Home className="w-8 h-8 text-white" />
-              <span className="text-2xl font-bold text-white">EstateHub</span>
-            </div>
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
+            </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
@@ -113,6 +114,7 @@ const Index = () => {
                 {properties?.slice(0, 6).map((property) => (
                   <PropertyCard 
                     key={property.id}
+                    id={property.id}
                     image={getImageForProperty(property.image_url || '')}
                     price={formatPrice(property.price, property.status)}
                     title={property.title}
@@ -172,6 +174,44 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Agents Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('ourAgents')}</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t('ourAgentsDescription')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <AgentCard 
+              name="Ardit Mehmeti"
+              role="Senior Real Estate Agent"
+              image={property1}
+              email="ardit@idealproperties.com"
+              phone="+355 69 123 4567"
+              description="With over 10 years of experience in the Albanian real estate market, Ardit specializes in luxury properties and commercial real estate."
+            />
+            <AgentCard 
+              name="Elona Kastrati"
+              role="Property Consultant"
+              image={property2}
+              email="elona@idealproperties.com"
+              phone="+355 69 234 5678"
+              description="Elona is dedicated to helping families find their dream homes. Her attention to detail and personalized service sets her apart."
+            />
+            <AgentCard 
+              name="Besnik Hoxha"
+              role="Investment Specialist"
+              image={property3}
+              email="besnik@idealproperties.com"
+              phone="+355 69 345 6789"
+              description="Besnik focuses on investment properties and helps clients maximize their real estate portfolio returns."
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
@@ -205,9 +245,8 @@ const Index = () => {
       <footer className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Home className="w-8 h-8" />
-              <span className="text-2xl font-bold">EstateHub</span>
+            <div className="flex items-center justify-center mb-4">
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
