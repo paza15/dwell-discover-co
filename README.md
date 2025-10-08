@@ -71,6 +71,16 @@ Before using the page:
 
 After configuring those two items, sign in as the owner, open `/admin`, complete the property details, and click **Publish listing**. The React app uses the same Supabase client as the public site, so the new record appears instantly on the home page.
 
+## How does the contact form send emails?
+
+The contact form talks directly to [Resend](https://resend.com/) from the browser. Add the following variables to your Vite environment (e.g. `.env.local`):
+
+- `VITE_RESEND_API_KEY` – an API key with permission to send emails.
+- `VITE_CONTACT_RECIPIENT_EMAIL` – the inbox that should receive contact form messages.
+- `VITE_CONTACT_FROM_EMAIL` *(optional)* – the verified sender address used in the "from" field. Defaults to the recipient address if omitted.
+
+Make sure the "from" address is verified inside your Resend project (you can use `onboarding@resend.dev` for quick tests). Once configured, each submission is sent via Resend and a success or failure toast is shown to the visitor.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/658e2726-9e13-4d9b-9343-0d9f77b2d9fd) and click on Share -> Publish.
