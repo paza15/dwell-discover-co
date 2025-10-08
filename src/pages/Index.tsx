@@ -12,7 +12,7 @@ import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -246,7 +246,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
