@@ -79,6 +79,7 @@ const Index = () => {
             <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="text-white hover:text-accent transition-colors">{t('about')}</Link>
               <Link to="/admin" className="text-white/80 hover:text-accent transition-colors">
                 {t('ownerPortal')}
@@ -168,8 +169,8 @@ const Index = () => {
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             Let our expert team guide you through every step of your real estate journey
           </p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            Get Started Today
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+            <Link to="/rent">Get Started Today</Link>
           </Button>
         </div>
       </section>

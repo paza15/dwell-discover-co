@@ -16,6 +16,10 @@ const translations = {
     about: 'About',
     contactUs: 'Contact Us',
     ownerPortal: 'Owner Portal',
+    blog: 'Blog',
+    blogTitle: 'Real Estate Insights & News',
+    blogSubtitle: 'Stay informed with the latest trends, tips, and market updates from our expert team',
+    readMore: 'Read More',
     
     // Hero
     findDreamHome: 'Find Your Dream Home',
@@ -114,6 +118,10 @@ const translations = {
     about: 'Rreth Nesh',
     contactUs: 'Na Kontaktoni',
     ownerPortal: 'Portali i Pronarit',
+    blog: 'Blogu',
+    blogTitle: 'Njohuri dhe Lajme për Pasuritë e Paluajtshme',
+    blogSubtitle: 'Qëndroni të informuar me tendencat, këshillat dhe përditësimet më të fundit të tregut nga ekipi ynë ekspert',
+    readMore: 'Lexo Më Shumë',
     
     // Hero
     findDreamHome: 'Gjeni Shtëpinë e Ëndrrave',

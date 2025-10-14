@@ -71,6 +71,7 @@ const Rent = () => {
             <div className="flex items-center gap-6">
               <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="hover:text-accent transition-colors">{t('about')}</Link>
               <LanguageSwitcher />
               <Button variant="secondary" asChild>
