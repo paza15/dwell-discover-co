@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg";
 
 const Buy = () => {
   const { t } = useLanguage();
@@ -66,7 +66,7 @@ const Buy = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto brightness-0 invert" />
             </Link>
             <div className="flex items-center gap-6">
               <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>

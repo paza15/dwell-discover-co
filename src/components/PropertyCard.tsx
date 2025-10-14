@@ -18,7 +18,7 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, status = "For Sale" }: PropertyCardProps) => {
   return (
-    <Card className="overflow-hidden group border-border hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)]">
+    <Card className="overflow-hidden group border-border hover-lift bg-[image:var(--gradient-card)]">
       <div className="relative h-64 overflow-hidden">
         <img 
           src={image} 

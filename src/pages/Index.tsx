@@ -12,7 +12,7 @@ import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -74,7 +74,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto brightness-0 invert" />
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
@@ -97,10 +97,10 @@ const Index = () => {
       <Hero />
 
       {/* Featured Properties */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Featured Properties</h2>
+            <h2 className="text-4xl font-bold gradient-text mb-4">Featured Properties</h2>
             <p className="text-muted-foreground text-lg">
               Handpicked properties that match your dreams
             </p>
@@ -128,7 +128,7 @@ const Index = () => {
                 ))}
               </div>
               <div className="text-center mt-12">
-                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-lift">
                   View All Properties
                 </Button>
               </div>
@@ -148,8 +148,8 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)] border-border">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
+              <Card key={index} className="p-8 text-center hover-lift border-border bg-[image:var(--gradient-card)]">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6 shadow-[var(--shadow-glow)]">
                   <service.icon className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-2xl font-semibold mb-3 text-foreground">{service.title}</h3>
@@ -161,15 +161,19 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[image:var(--gradient-hero)]">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+      <section className="py-20 bg-[image:var(--gradient-hero)] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl font-bold text-white mb-6 animate-fade-in">
             Ready to Find Your Perfect Home?
           </h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             Let our expert team guide you through every step of your real estate journey
           </p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground hover-lift shadow-[var(--shadow-elevated)]" asChild>
             <Link to="/rent">Get Started Today</Link>
           </Button>
         </div>
