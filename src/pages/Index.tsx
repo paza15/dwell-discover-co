@@ -12,7 +12,9 @@ import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo-new.png";
+import agent1 from "@/assets/agent-1.jpg";
+import agent2 from "@/assets/agent-2.jpg";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -70,11 +72,11 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-20 bg-transparent">
+      <nav className="absolute top-0 left-0 right-0 z-20 bg-black/90 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="iDeal Properties" className="h-12 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
@@ -188,30 +190,22 @@ const Index = () => {
               {t('ourAgentsDescription')}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <AgentCard 
-              name="Ardit Mehmeti"
-              role="Senior Real Estate Agent"
-              image={property1}
-              email="ardit@idealproperties.com"
+              name="Agent Name"
+              role="Real Estate Specialist"
+              image={agent1}
+              email="agent1@idealproperties.com"
               phone="+355 69 123 4567"
-              description="With over 10 years of experience in the Albanian real estate market, Ardit specializes in luxury properties and commercial real estate."
+              description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
             />
             <AgentCard 
-              name="Elona Kastrati"
+              name="Agent Name"
               role="Property Consultant"
-              image={property2}
-              email="elona@idealproperties.com"
+              image={agent2}
+              email="agent2@idealproperties.com"
               phone="+355 69 234 5678"
-              description="Elona is dedicated to helping families find their dream homes. Her attention to detail and personalized service sets her apart."
-            />
-            <AgentCard 
-              name="Besnik Hoxha"
-              role="Investment Specialist"
-              image={property3}
-              email="besnik@idealproperties.com"
-              phone="+355 69 345 6789"
-              description="Besnik focuses on investment properties and helps clients maximize their real estate portfolio returns."
+              description="Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey."
             />
           </div>
         </div>
