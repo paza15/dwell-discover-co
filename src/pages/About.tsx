@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Home, Users, Award, TrendingUp } from "lucide-react";
+import logo from "@/assets/logo-new.png";
 
 const About = () => {
   const { t } = useLanguage();
@@ -18,19 +19,19 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-primary text-primary-foreground">
+      <nav className="bg-black/90 backdrop-blur-sm text-white">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <Home className="w-8 h-8" />
-              <span className="text-2xl font-bold">EstateHub</span>
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="flex items-center gap-6">
               <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
-              <Link to="/about" className="hover:text-accent transition-colors">{t('about')}</Link>
+              <Link to="/blog" className="hover:text-accent transition-colors">{t('blog')}</Link>
+              <Link to="/about" className="text-accent font-semibold">{t('about')}</Link>
               <LanguageSwitcher />
-              <Button variant="secondary" asChild>
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
@@ -49,7 +50,7 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold text-foreground mb-6">{t('ourStory')}</h2>
@@ -64,7 +65,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -81,7 +82,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-foreground text-center mb-12">{t('ourValues')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -114,7 +115,7 @@ const About = () => {
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             {t('findPropertyTogether')}
           </p>
-          <Button size="lg" variant="secondary" asChild>
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
             <Link to="/contact">{t('contactUsToday')}</Link>
           </Button>
         </div>

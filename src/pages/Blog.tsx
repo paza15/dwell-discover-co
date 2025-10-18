@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Calendar, User, ArrowRight } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo-new.png";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
@@ -45,18 +45,18 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-card border-b border-border sticky top-0 z-50">
+      <nav className="bg-black/90 backdrop-blur-sm text-white sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
               <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link to="/buy" className="text-foreground hover:text-primary transition-colors">{t('buy')}</Link>
-              <Link to="/rent" className="text-foreground hover:text-primary transition-colors">{t('rent')}</Link>
-              <Link to="/blog" className="text-primary font-semibold">{t('blog')}</Link>
-              <Link to="/about" className="text-foreground hover:text-primary transition-colors">{t('about')}</Link>
-              <Link to="/admin" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
+              <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="text-accent font-semibold">{t('blog')}</Link>
+              <Link to="/about" className="text-white hover:text-accent transition-colors">{t('about')}</Link>
+              <Link to="/admin" className="text-white/70 hover:text-accent transition-colors">
                 {t('ownerPortal')}
               </Link>
               <LanguageSwitcher />
@@ -81,7 +81,7 @@ const Blog = () => {
       </section>
 
       {/* Blog Posts Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post) => (

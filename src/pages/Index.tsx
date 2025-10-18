@@ -99,7 +99,7 @@ const Index = () => {
       <Hero />
 
       {/* Featured Properties */}
-      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold gradient-text mb-4">Featured Properties</h2>
@@ -140,7 +140,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4">Our Services</h2>
@@ -182,7 +182,7 @@ const Index = () => {
       </section>
 
       {/* Agents Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4 text-foreground">{t('ourAgents')}</h2>
