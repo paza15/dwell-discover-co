@@ -9,39 +9,28 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Home, TrendingUp, Shield, Phone, Mail, MapPin } from "lucide-react";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
 import logo from "@/assets/logo-new.png";
 import agent1 from "@/assets/agent-1.jpg";
 import agent2 from "@/assets/agent-2.jpg";
+import { resolvePropertyImage } from "@/lib/propertyImages";
+import type { Tables } from "@/integrations/supabase/types";
 
 const Index = () => {
   const { t } = useLanguage();
   
   // Fetch properties from database
-  const { data: properties, isLoading } = useQuery({
+  const { data: properties, isLoading } = useQuery<Tables<'properties'>[]>({
     queryKey: ['properties'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('properties')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      return data;
+      return data as Tables<'properties'>[];
     },
   });
-
-  // Map image URLs to imported assets
-  const getImageForProperty = (imageUrl: string) => {
-    const imageMap: Record<string, string> = {
-      'property-1.jpg': property1,
-      'property-2.jpg': property2,
-      'property-3.jpg': property3,
-    };
-    return imageMap[imageUrl] || property1;
-  };
 
   // Format price based on status
   const formatPrice = (price: number, status: string) => {
@@ -115,10 +104,10 @@ const Index = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {properties?.slice(0, 6).map((property) => (
-                  <PropertyCard 
+                  <PropertyCard
                     key={property.id}
                     id={property.id}
-                    image={getImageForProperty(property.image_url || '')}
+                    image={resolvePropertyImage(property.image_url, property.image_urls)}
                     price={formatPrice(property.price, property.status)}
                     title={property.title}
                     location={property.location}
