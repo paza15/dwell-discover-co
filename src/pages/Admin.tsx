@@ -42,7 +42,7 @@ const propertySchema = z.object({
     required_error: "Select a status",
   }),
   propertyType: z.string().min(2, "Property type is required"),
-  imageUrl: z.string().optional(),
+  imageUrls: z.string().optional(),
   adminPasscode: z.string().min(1, "Enter the owner passcode"),
 });
 
@@ -56,7 +56,7 @@ const defaultValues = {
   sqft: 1500,
   status: "For Sale" as const,
   propertyType: "House",
-  imageUrl: "",
+  imageUrls: "",
   adminPasscode: "",
 };
 
@@ -83,7 +83,12 @@ const Admin = () => {
         throw new Error("Incorrect owner passcode. Please try again.");
       }
 
-      const { adminPasscode: _adminPasscode, propertyType, imageUrl, ...rest } = values;
+      const { adminPasscode: _adminPasscode, propertyType, imageUrls, ...rest } = values;
+
+      const parsedImageUrls = (imageUrls || "")
+        .split(/\n|,/)
+        .map((url) => url.trim())
+        .filter((url) => url.length > 0);
 
       const payload = {
         title: rest.title,
@@ -95,7 +100,8 @@ const Admin = () => {
         status: rest.status,
         description: rest.description?.trim() || null,
         property_type: propertyType.trim() || 'House',
-        image_url: imageUrl?.trim() || null,
+        image_url: parsedImageUrls[0] || null,
+        image_urls: parsedImageUrls.length ? parsedImageUrls : null,
       };
 
       const { error } = await supabase.from("properties").insert([payload]);
@@ -286,13 +292,20 @@ const Admin = () => {
                     />
                     <FormField
                       control={form.control}
-                      name="imageUrl"
+                      name="imageUrls"
                       render={({ field }) => (
                         <FormItem className="md:col-span-2">
-                          <FormLabel>Image filename or URL</FormLabel>
+                          <FormLabel>Image filenames or URLs</FormLabel>
                           <FormControl>
-                            <Input placeholder="property-1.jpg or https://..." {...field} />
+                            <Textarea
+                              rows={3}
+                              placeholder={`property-1.jpg\nhttps://example.com/second-image.jpg`}
+                              {...field}
+                            />
                           </FormControl>
+                          <p className="text-xs text-muted-foreground">
+                            Enter one image per line or separate them with commas. The first image becomes the cover photo.
+                          </p>
                           <FormMessage />
                         </FormItem>
                       )}
