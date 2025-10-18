@@ -16,6 +16,10 @@ const translations = {
     about: 'About',
     contactUs: 'Contact Us',
     ownerPortal: 'Owner Portal',
+    blog: 'Blog',
+    blogTitle: 'Real Estate Insights & News',
+    blogSubtitle: 'Stay informed with the latest trends, tips, and market updates from our expert team',
+    readMore: 'Read More',
     
     // Hero
     findDreamHome: 'Find Your Dream Home',
@@ -47,6 +51,11 @@ const translations = {
     baths: 'Baths',
     sqft: 'sqft',
     viewDetails: 'View Details',
+    backToListings: 'Back to Listings',
+    description: 'Description',
+    noDescription: 'No description available for this property.',
+    ourAgents: 'Our Real Estate Agents',
+    ourAgentsDescription: 'Meet our experienced team of real estate professionals ready to help you find your perfect property.',
     
     // Buy Page
     propertiesForSale: 'Properties For Sale',
@@ -109,6 +118,10 @@ const translations = {
     about: 'Rreth Nesh',
     contactUs: 'Na Kontaktoni',
     ownerPortal: 'Portali i Pronarit',
+    blog: 'Blogu',
+    blogTitle: 'Njohuri dhe Lajme për Pasuritë e Paluajtshme',
+    blogSubtitle: 'Qëndroni të informuar me tendencat, këshillat dhe përditësimet më të fundit të tregut nga ekipi ynë ekspert',
+    readMore: 'Lexo Më Shumë',
     
     // Hero
     findDreamHome: 'Gjeni Shtëpinë e Ëndrrave',
@@ -140,6 +153,11 @@ const translations = {
     baths: 'Banjo',
     sqft: 'm²',
     viewDetails: 'Shiko Detajet',
+    backToListings: 'Kthehu te Listat',
+    description: 'Përshkrimi',
+    noDescription: 'Nuk ka përshkrim të disponueshëm për këtë pronë.',
+    ourAgents: 'Agjentët Tanë të Pasurive të Paluajtshme',
+    ourAgentsDescription: 'Njihuni me ekipin tonë të përvuarëshem të profesionistëve të pasurive të paluajtshme të gatshëm t\'ju ndihmojnë të gjeni pronën tuaj të përsosur.',
     
     // Buy Page
     propertiesForSale: 'Prona Për Shitje',

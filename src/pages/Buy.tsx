@@ -4,13 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import PropertyCard from "@/components/PropertyCard";
 import PropertyFilters, { FilterValues } from "@/components/PropertyFilters";
+import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
+import logo from "@/assets/logo-new.png";
+import agent1 from "@/assets/agent-1.jpg";
+import agent2 from "@/assets/agent-2.jpg";
 
 const Buy = () => {
   const { t } = useLanguage();
@@ -61,19 +64,19 @@ const Buy = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-primary text-primary-foreground">
+      <nav className="bg-black/90 backdrop-blur-sm text-white">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <Home className="w-8 h-8" />
-              <span className="text-2xl font-bold">EstateHub</span>
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="flex items-center gap-6">
               <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="hover:text-accent transition-colors">{t('about')}</Link>
               <LanguageSwitcher />
-              <Button variant="secondary" asChild>
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
@@ -92,7 +95,7 @@ const Buy = () => {
       </section>
 
       {/* Properties Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <PropertyFilters onFilterChange={setFilters} />
           
@@ -105,6 +108,7 @@ const Buy = () => {
               {filteredProperties.map((property) => (
                 <PropertyCard 
                   key={property.id}
+                  id={property.id}
                   image={getImageForProperty(property.image_url || '')}
                   price={`$${property.price.toLocaleString()}`}
                   title={property.title}
@@ -121,6 +125,36 @@ const Buy = () => {
               <p className="text-muted-foreground text-lg">{t('noPropertiesForSale')}</p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Agents Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('ourAgents')}</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t('ourAgentsDescription')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <AgentCard 
+              name="Agent Name"
+              role="Real Estate Specialist"
+              image={agent1}
+              email="agent1@idealproperties.com"
+              phone="+355 69 123 4567"
+              description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
+            />
+            <AgentCard 
+              name="Agent Name"
+              role="Property Consultant"
+              image={agent2}
+              email="agent2@idealproperties.com"
+              phone="+355 69 234 5678"
+              description="Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey."
+            />
+          </div>
         </div>
       </section>
     </div>

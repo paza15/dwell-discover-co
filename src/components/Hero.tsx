@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +8,8 @@ import heroImage from "@/assets/hero-real-estate.jpg";
 
 const Hero = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   
   return (
     <div className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
@@ -32,10 +36,18 @@ const Hero = () => {
         <div className="bg-card rounded-full shadow-[var(--shadow-elevated)] p-2 flex flex-col md:flex-row gap-2 max-w-3xl mx-auto">
           <Input 
             placeholder={t('searchPlaceholder')}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                navigate(`/buy?search=${encodeURIComponent(searchQuery)}`);
+              }
+            }}
             className="flex-1 border-0 focus-visible:ring-0 text-base h-12 rounded-full"
           />
           <Button 
             size="lg" 
+            onClick={() => navigate(`/buy?search=${encodeURIComponent(searchQuery)}`)}
             className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12"
           >
             <Search className="w-5 h-5 mr-2" />
@@ -45,13 +57,25 @@ const Hero = () => {
         
         {/* Quick Links */}
         <div className="flex flex-wrap justify-center gap-4 mt-8">
-          <Button variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm">
+          <Button 
+            variant="outline" 
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
+            onClick={() => navigate('/buy')}
+          >
             {t('forSale')}
           </Button>
-          <Button variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm">
+          <Button 
+            variant="outline" 
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
+            onClick={() => navigate('/rent')}
+          >
             {t('forRent')}
           </Button>
-          <Button variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm">
+          <Button 
+            variant="outline" 
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
+            onClick={() => navigate('/buy')}
+          >
             {t('newListings')}
           </Button>
         </div>

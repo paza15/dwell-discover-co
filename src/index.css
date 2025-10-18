@@ -8,100 +8,111 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 15% 15%;
+    /* Navy and Sage Color Palette */
+    --background: 0 0% 100%;
+    --foreground: 201 52% 7%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 201 52% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 201 52% 7%;
 
-    --primary: 217 91% 25%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary - Dark Navy #06141B to #11212D */
+    --primary: 201 52% 12%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 201 40% 25%;
 
-    --secondary: 220 13% 95%;
-    --secondary-foreground: 220 15% 15%;
+    /* Secondary - Medium Blue-Gray #445878 */
+    --secondary: 210 20% 35%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 13% 95%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 20% 90%;
+    --muted-foreground: 201 30% 30%;
 
-    --accent: 43 96% 56%;
-    --accent-foreground: 220 15% 15%;
+    /* Accent - Sage #CCDDCF */
+    --accent: 144 17% 82%;
+    --accent-foreground: 201 52% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 217 91% 25%;
+    --border: 214 20% 85%;
+    --input: 214 20% 85%;
+    --ring: 201 52% 12%;
 
     --radius: 0.75rem;
     
-    /* Custom tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 25%) 0%, hsl(220 80% 35%) 100%);
-    --gradient-overlay: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
-    --shadow-elevated: 0 10px 40px -10px hsl(217 91% 25% / 0.2);
-    --shadow-card: 0 4px 20px -4px hsl(220 15% 15% / 0.1);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Custom gradients - Navy to Sage */
+    --gradient-hero: linear-gradient(135deg, hsl(201 52% 7%) 0%, hsl(201 52% 12%) 50%, hsl(210 20% 35%) 100%);
+    --gradient-overlay: linear-gradient(180deg, rgba(6,20,27,0.5) 0%, rgba(6,20,27,0.2) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 95%) 100%);
+    --gradient-light: linear-gradient(180deg, hsl(207 44% 90%) 0%, hsl(210 20% 82%) 100%);
+    --gradient-shine: linear-gradient(120deg, transparent 0%, hsl(144 17% 82% / 0.2) 50%, transparent 100%);
+    
+    /* Shadows */
+    --shadow-elevated: 0 20px 60px -15px hsl(201 52% 12% / 0.25);
+    --shadow-card: 0 4px 20px -4px hsl(201 52% 12% / 0.12);
+    --shadow-glow: 0 0 40px hsl(144 17% 82% / 0.3);
+    
+    /* Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    --sidebar-foreground: 201 30% 26%;
+    --sidebar-primary: 201 52% 12%;
     --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 144 17% 90%;
+    --sidebar-accent-foreground: 201 52% 12%;
+    --sidebar-border: 210 20% 85%;
+    --sidebar-ring: 201 52% 12%;
   }
 
   .dark {
-    --background: 220 20% 8%;
-    --foreground: 0 0% 95%;
+    --background: 201 52% 7%;
+    --foreground: 0 0% 98%;
 
-    --card: 220 18% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 201 45% 10%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 18% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 201 45% 10%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 217 91% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 144 17% 82%;
+    --primary-foreground: 201 52% 7%;
+    --primary-glow: 144 17% 72%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 210 20% 25%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 9% 60%;
+    --muted: 201 40% 15%;
+    --muted-foreground: 210 20% 70%;
 
-    --accent: 43 96% 56%;
-    --accent-foreground: 220 20% 8%;
+    --accent: 210 20% 35%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 217 91% 45%;
+    --border: 201 40% 18%;
+    --input: 201 40% 18%;
+    --ring: 144 17% 82%;
     
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 35%) 0%, hsl(220 80% 45%) 100%);
-    --shadow-elevated: 0 10px 40px -10px hsl(217 91% 45% / 0.3);
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --gradient-hero: linear-gradient(135deg, hsl(201 52% 7%) 0%, hsl(201 52% 12%) 50%, hsl(210 20% 25%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(201 45% 10%) 0%, hsl(201 40% 15%) 100%);
+    --shadow-elevated: 0 20px 60px -15px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 50px hsl(144 17% 82% / 0.2);
+    
+    --sidebar-background: 201 52% 7%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 144 17% 82%;
+    --sidebar-primary-foreground: 201 52% 7%;
+    --sidebar-accent: 210 20% 25%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 201 40% 18%;
+    --sidebar-ring: 144 17% 82%;
   }
 }
 
@@ -112,5 +123,29 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)];
+  }
+  
+  .gradient-text {
+    background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-glow)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-[image:var(--gradient-shine)];
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }
