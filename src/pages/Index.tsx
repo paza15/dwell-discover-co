@@ -72,7 +72,7 @@ const Index = () => {
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
               <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="text-white hover:text-accent transition-colors">{t('about')}</Link>
-              <Link to="/admin" className="text-white/80 hover:text-accent transition-colors">
+              <Link to="/auth" className="text-white/80 hover:text-accent transition-colors">
                 {t('ownerPortal')}
               </Link>
               <LanguageSwitcher />

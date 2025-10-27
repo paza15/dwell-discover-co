@@ -155,21 +155,8 @@ const Admin = () => {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
-        <Card className="max-w-md w-full mx-4">
-          <CardHeader>
-            <CardTitle>Authentication Required</CardTitle>
-            <CardDescription>Please sign in to access the owner portal</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button className="w-full" onClick={() => navigate('/')}>
-              Back to Home
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    navigate('/auth');
+    return null;
   }
 
   return (
