@@ -4,12 +4,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Shield } from "lucide-react";
 import logo from "@/assets/logo-new.png";
 
@@ -24,7 +23,6 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("signin");
 
   const form = useForm<AuthFormValues>({
     resolver: zodResolver(authSchema),
@@ -52,7 +50,7 @@ const Auth = () => {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleSignIn = async (values: AuthFormValues) => {
+  const onSubmit = async (values: AuthFormValues) => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -92,63 +90,6 @@ const Auth = () => {
     }
   };
 
-  const handleSignUp = async (values: AuthFormValues) => {
-    setIsLoading(true);
-    try {
-      const redirectUrl = `${window.location.origin}/admin`;
-      
-      const { error } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password,
-        options: {
-          emailRedirectTo: redirectUrl,
-        },
-      });
-
-      if (error) {
-        if (error.message.includes("User already registered")) {
-          toast({
-            title: "Account exists",
-            description: "This email is already registered. Please sign in instead.",
-            variant: "destructive",
-          });
-          setActiveTab("signin");
-        } else {
-          toast({
-            title: "Sign up failed",
-            description: error.message,
-            variant: "destructive",
-          });
-        }
-        return;
-      }
-
-      toast({
-        title: "Account created!",
-        description: "You can now sign in to access the owner portal.",
-      });
-      
-      setActiveTab("signin");
-      form.reset();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onSubmit = (values: AuthFormValues) => {
-    if (activeTab === "signin") {
-      handleSignIn(values);
-    } else {
-      handleSignUp(values);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[image:var(--gradient-light)] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -165,12 +106,8 @@ const Auth = () => {
 
         <Card>
           <CardHeader>
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <CardTitle>Sign In</CardTitle>
+            <CardDescription>Enter your credentials to access the owner portal</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -203,7 +140,7 @@ const Auth = () => {
                         <Input
                           type="password"
                           placeholder="••••••••"
-                          autoComplete={activeTab === "signin" ? "current-password" : "new-password"}
+                          autoComplete="current-password"
                           {...field}
                         />
                       </FormControl>
@@ -215,10 +152,10 @@ const Auth = () => {
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {activeTab === "signin" ? "Signing in..." : "Creating account..."}
+                      Signing in...
                     </>
                   ) : (
-                    activeTab === "signin" ? "Sign In" : "Create Account"
+                    "Sign In"
                   )}
                 </Button>
               </form>
