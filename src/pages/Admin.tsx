@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Shield } from "lucide-react";
+import { Loader2, Shield, LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -28,8 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const ADMIN_PASSCODE = import.meta.env.VITE_ADMIN_PASSCODE as string | undefined;
-
 const propertySchema = z.object({
   title: z.string().min(3, "A title is required"),
   price: z.coerce.number().positive("Enter a positive price"),
@@ -43,7 +42,6 @@ const propertySchema = z.object({
   }),
   propertyType: z.string().min(2, "Property type is required"),
   imageUrls: z.string().optional(),
-  adminPasscode: z.string().min(1, "Enter the owner passcode"),
 });
 
 const defaultValues = {
@@ -57,7 +55,6 @@ const defaultValues = {
   status: "For Sale" as const,
   propertyType: "House",
   imageUrls: "",
-  adminPasscode: "",
 };
 
 type PropertyFormValues = z.infer<typeof propertySchema>;
@@ -65,25 +62,43 @@ type PropertyFormValues = z.infer<typeof propertySchema>;
 const Admin = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      setLoading(false);
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to access the owner portal.",
+          variant: "destructive",
+        });
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [toast]);
 
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
     defaultValues,
   });
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
+
   const createListing = useMutation({
     mutationFn: async (values: PropertyFormValues) => {
-      if (!ADMIN_PASSCODE) {
-        throw new Error(
-          "VITE_ADMIN_PASSCODE is not configured. Set it in your environment before using the owner form.",
-        );
-      }
-
-      if (values.adminPasscode !== ADMIN_PASSCODE) {
-        throw new Error("Incorrect owner passcode. Please try again.");
-      }
-
-      const { adminPasscode: _adminPasscode, propertyType, imageUrls, ...rest } = values;
+      const { propertyType, imageUrls, ...rest } = values;
 
       const parsedImageUrls = (imageUrls || "")
         .split(/\n|,/)
@@ -116,8 +131,7 @@ const Admin = () => {
         description: "The new property has been added successfully.",
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
-      const lastStatus = form.getValues("status");
-      form.reset({ ...defaultValues, status: lastStatus });
+      form.reset(defaultValues);
     },
     onError: (error: Error) => {
       toast({
@@ -132,6 +146,32 @@ const Admin = () => {
     createListing.mutate(values);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <Card className="max-w-md w-full mx-4">
+          <CardHeader>
+            <CardTitle>Authentication Required</CardTitle>
+            <CardDescription>Please sign in to access the owner portal</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button className="w-full" onClick={() => navigate('/')}>
+              Back to Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-muted/30">
       <header className="border-b border-border bg-background">
@@ -143,9 +183,15 @@ const Admin = () => {
               <p className="text-sm text-muted-foreground">Add new property listings in seconds</p>
             </div>
           </div>
-          <Button variant="outline" asChild>
-            <Link to="/">Back to site</Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleSignOut}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/">Back to site</Link>
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -153,16 +199,10 @@ const Admin = () => {
         <div className="mx-auto flex max-w-3xl flex-col gap-6">
           <Alert>
             <Shield className="h-4 w-4" />
-            <AlertTitle>Before you begin</AlertTitle>
+            <AlertTitle>Welcome, {user.email}</AlertTitle>
             <AlertDescription>
               <p>
-                Ensure the Supabase Row Level Security policy allows the owner&apos;s authenticated user (or service role) to
-                insert rows into the <span className="font-mono text-sm">properties</span> table. Without that policy,
-                Supabase will block form submissions.
-              </p>
-              <p className="mt-2">
-                Protect this page by setting a strong <span className="font-mono text-sm">VITE_ADMIN_PASSCODE</span> value in
-                your deployment environment. Only someone with the passcode can publish new listings.
+                You are authenticated and can now add new property listings. All submissions are automatically linked to your account.
               </p>
             </AlertDescription>
           </Alert>
@@ -320,20 +360,6 @@ const Admin = () => {
                         <FormLabel>Description</FormLabel>
                         <FormControl>
                           <Textarea rows={5} placeholder="Highlight the best features of this listing" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="adminPasscode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Owner passcode</FormLabel>
-                        <FormControl>
-                          <Input type="password" autoComplete="current-password" placeholder="Enter the secure passcode" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

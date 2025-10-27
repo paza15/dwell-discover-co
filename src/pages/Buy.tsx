@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +16,9 @@ import type { Tables } from "@/integrations/supabase/types";
 
 const Buy = () => {
   const { t } = useLanguage();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+  
   const [filters, setFilters] = useState<FilterValues>({
     minPrice: '',
     maxPrice: '',
@@ -42,6 +45,17 @@ const Buy = () => {
     if (!properties) return [];
     
     return properties.filter((property) => {
+      // Search query filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const matchesSearch = 
+          property.title.toLowerCase().includes(query) ||
+          property.location.toLowerCase().includes(query) ||
+          property.description?.toLowerCase().includes(query);
+        if (!matchesSearch) return false;
+      }
+      
+      // Price filters
       if (filters.minPrice && property.price < parseFloat(filters.minPrice)) return false;
       if (filters.maxPrice && property.price > parseFloat(filters.maxPrice)) return false;
       if (filters.beds && filters.beds !== 'any' && property.beds < parseInt(filters.beds)) return false;
@@ -49,7 +63,7 @@ const Buy = () => {
       if (filters.propertyType && filters.propertyType !== 'any' && property.property_type !== filters.propertyType) return false;
       return true;
     });
-  }, [properties, filters]);
+  }, [properties, filters, searchQuery]);
 
   return (
     <div className="min-h-screen bg-background">
