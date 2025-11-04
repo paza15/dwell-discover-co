@@ -4,43 +4,26 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo-new.png";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
 
 const Blog = () => {
   const { t } = useLanguage();
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Top 10 Tips for First-Time Home Buyers",
-      excerpt: "Essential advice to help you navigate the home buying process with confidence and make informed decisions.",
-      image: property1,
-      author: "Ardit Mehmeti",
-      date: "March 15, 2025",
-      category: "Buying Guide"
+  const { data: blogPosts = [], isLoading } = useQuery({
+    queryKey: ["blog-posts"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return data;
     },
-    {
-      id: 2,
-      title: "Understanding the Albanian Real Estate Market in 2025",
-      excerpt: "A comprehensive overview of current market trends, pricing, and investment opportunities in Albania.",
-      image: property2,
-      author: "Elona Kastrati",
-      date: "March 10, 2025",
-      category: "Market Insights"
-    },
-    {
-      id: 3,
-      title: "Investing in Rental Properties: What You Need to Know",
-      excerpt: "Learn the fundamentals of rental property investment and maximize your returns in the real estate market.",
-      image: property3,
-      author: "Besnik Hoxha",
-      date: "March 5, 2025",
-      category: "Investment"
-    }
-  ];
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,41 +66,64 @@ const Blog = () => {
       {/* Blog Posts Grid */}
       <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <Card key={post.id} className="overflow-hidden hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)] border-border">
-                <img 
-                  src={post.image} 
-                  alt={post.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {post.date}
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading articles...</p>
+            </div>
+          ) : blogPosts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">No articles published yet.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogPosts.map((post) => (
+                <Card key={post.id} className="overflow-hidden hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)] border-border">
+                  {post.image_url && (
+                    <img 
+                      src={post.image_url}
+                      alt={post.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                      <span className="inline-flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(post.created_at).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <User className="w-4 h-4" />
+                        {post.author}
+                      </span>
+                    </div>
+                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-3">
+                      {post.category}
                     </span>
-                    <span className="inline-flex items-center gap-1">
-                      <User className="w-4 h-4" />
-                      {post.author}
-                    </span>
+                    <h3 className="text-xl font-bold text-foreground mb-3">
+                      {post.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">
+                      {post.excerpt}
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full"
+                      asChild
+                    >
+                      <Link to={`/blog/${post.id}`}>
+                        {t('readMore')} <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
                   </div>
-                  <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-3">
-                    {post.category}
-                  </span>
-                  <h3 className="text-xl font-bold text-foreground mb-3">
-                    {post.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {post.excerpt}
-                  </p>
-                  <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full">
-                    {t('readMore')} <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

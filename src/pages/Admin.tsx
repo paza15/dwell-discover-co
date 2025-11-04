@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const propertySchema = z.object({
   title: z.string().min(3, "A title is required"),
@@ -45,6 +46,16 @@ const propertySchema = z.object({
   propertyType: z.string().min(2, "Property type is required"),
 });
 
+const blogSchema = z.object({
+  title: z.string().min(3, "A title is required"),
+  excerpt: z.string().min(10, "An excerpt is required"),
+  content: z.string().min(50, "Content must be at least 50 characters"),
+  author: z.string().min(2, "Author name is required"),
+  category: z.string().min(2, "Category is required"),
+  image_url: z.string().optional(),
+  published: z.boolean().default(true),
+});
+
 const defaultValues = {
   title: "",
   price: 450000,
@@ -57,7 +68,18 @@ const defaultValues = {
   propertyType: "House",
 };
 
+const defaultBlogValues = {
+  title: "",
+  excerpt: "",
+  content: "",
+  author: "",
+  category: "",
+  image_url: "",
+  published: true,
+};
+
 type PropertyFormValues = z.infer<typeof propertySchema>;
+type BlogFormValues = z.infer<typeof blogSchema>;
 
 const Admin = () => {
   const { toast } = useToast();
@@ -66,6 +88,7 @@ const Admin = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [blogImage, setBlogImage] = useState<string>("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -87,9 +110,14 @@ const Admin = () => {
     return () => subscription.unsubscribe();
   }, [toast]);
 
-  const form = useForm<PropertyFormValues>({
+  const propertyForm = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
     defaultValues,
+  });
+
+  const blogForm = useForm<BlogFormValues>({
+    resolver: zodResolver(blogSchema),
+    defaultValues: defaultBlogValues,
   });
 
   const { data: properties = [] } = useQuery<Tables<'properties'>[]>({
@@ -97,6 +125,19 @@ const Admin = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: blogPosts = [] } = useQuery<Tables<'blog_posts'>[]>({
+    queryKey: ['blog-posts-admin'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_posts')
         .select('*')
         .order('created_at', { ascending: false });
       
@@ -140,7 +181,7 @@ const Admin = () => {
         description: "The new property has been added successfully.",
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
-      form.reset(defaultValues);
+      propertyForm.reset(defaultValues);
       setUploadedImages([]);
     },
     onError: (error: Error) => {
@@ -177,8 +218,70 @@ const Admin = () => {
     },
   });
 
-  const onSubmit = (values: PropertyFormValues) => {
+  const createBlogPost = useMutation({
+    mutationFn: async (values: BlogFormValues) => {
+      const payload = {
+        title: values.title,
+        excerpt: values.excerpt,
+        content: values.content,
+        author: values.author,
+        category: values.category,
+        image_url: blogImage || null,
+        published: values.published,
+      };
+
+      const { error } = await supabase.from("blog_posts").insert([payload]);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast({
+        title: "Blog post created",
+        description: "The new blog post has been added successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["blog-posts-admin"] });
+      blogForm.reset(defaultBlogValues);
+      setBlogImage("");
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Unable to create blog post",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteBlogPost = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("blog_posts")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["blog-posts-admin"] });
+      toast({
+        title: "Blog post deleted",
+        description: "The blog post has been removed successfully.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Unable to delete blog post",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onPropertySubmit = (values: PropertyFormValues) => {
     createListing.mutate(values);
+  };
+
+  const onBlogSubmit = (values: BlogFormValues) => {
+    createBlogPost.mutate(values);
   };
 
   if (loading) {
@@ -224,23 +327,30 @@ const Admin = () => {
             <AlertTitle>Welcome, {user.email}</AlertTitle>
             <AlertDescription>
               <p>
-                You are authenticated and can now add new property listings. All submissions are automatically linked to your account.
+                You are authenticated and can now manage properties and blog posts.
               </p>
             </AlertDescription>
           </Alert>
 
-          <Card>
+          <Tabs defaultValue="properties" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="properties">Properties</TabsTrigger>
+              <TabsTrigger value="blog">Blog Posts</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="properties" className="space-y-6">
+              <Card>
             <CardHeader className="space-y-2">
               <CardTitle>Add a property</CardTitle>
               <CardDescription>Fill in the details below to publish a new listing.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="title"
+                <CardContent>
+                  <Form {...propertyForm}>
+                    <form onSubmit={propertyForm.handleSubmit(onPropertySubmit)} className="space-y-6">
+                      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <FormField
+                          control={propertyForm.control}
+                          name="title"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Title</FormLabel>
@@ -250,10 +360,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="price"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="price"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Price</FormLabel>
@@ -263,10 +373,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="location"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="location"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Location</FormLabel>
@@ -276,10 +386,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="status"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="status"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Status</FormLabel>
@@ -299,10 +409,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="beds"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="beds"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Beds</FormLabel>
@@ -312,10 +422,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="baths"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="baths"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Baths</FormLabel>
@@ -325,10 +435,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="sqft"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="sqft"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Square footage</FormLabel>
@@ -338,10 +448,10 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="propertyType"
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="propertyType"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Property type</FormLabel>
@@ -351,19 +461,19 @@ const Admin = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
-                    <div className="md:col-span-2">
-                      <FormLabel>Property Images</FormLabel>
-                      <ImageUpload
-                        images={uploadedImages}
-                        onImagesChange={setUploadedImages}
-                      />
-                    </div>
-                  </div>
+                        />
+                        <div className="md:col-span-2">
+                          <FormLabel>Property Images</FormLabel>
+                          <ImageUpload
+                            images={uploadedImages}
+                            onImagesChange={setUploadedImages}
+                          />
+                        </div>
+                      </div>
 
-                  <FormField
-                    control={form.control}
-                    name="description"
+                      <FormField
+                        control={propertyForm.control}
+                        name="description"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Description</FormLabel>
@@ -373,62 +483,206 @@ const Admin = () => {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                      />
 
-                  <Button type="submit" className="w-full md:w-auto" disabled={createListing.isPending}>
-                    {createListing.isPending ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Saving listing...
-                      </>
-                    ) : (
-                      "Publish listing"
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Manage Properties</CardTitle>
-              <CardDescription>View and delete existing properties</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {properties.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-8">No properties yet</p>
-                ) : (
-                  properties.map((property) => (
-                    <div
-                      key={property.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
-                    >
-                      <div className="flex-1">
-                        <h3 className="font-semibold">{property.title}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {property.location} • ${property.price.toLocaleString()} • {property.status}
-                        </p>
-                      </div>
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this property?")) {
-                            deleteProperty.mutate(property.id);
-                          }
-                        }}
-                        disabled={deleteProperty.isPending}
-                      >
-                        <Trash2 className="w-4 h-4" />
+                      <Button type="submit" className="w-full md:w-auto" disabled={createListing.isPending}>
+                        {createListing.isPending ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Saving listing...
+                          </>
+                        ) : (
+                          "Publish listing"
+                        )}
                       </Button>
-                    </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Properties</CardTitle>
+                  <CardDescription>View and delete existing properties</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {properties.length === 0 ? (
+                      <p className="text-muted-foreground text-center py-8">No properties yet</p>
+                    ) : (
+                      properties.map((property) => (
+                        <div
+                          key={property.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                        >
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{property.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {property.location} • ${property.price.toLocaleString()} • {property.status}
+                            </p>
+                          </div>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this property?")) {
+                                deleteProperty.mutate(property.id);
+                              }
+                            }}
+                            disabled={deleteProperty.isPending}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="blog" className="space-y-6">
+              <Card>
+                <CardHeader className="space-y-2">
+                  <CardTitle>Add a blog post</CardTitle>
+                  <CardDescription>Create and publish new blog articles</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...blogForm}>
+                    <form onSubmit={blogForm.handleSubmit(onBlogSubmit)} className="space-y-6">
+                      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <FormField
+                          control={blogForm.control}
+                          name="title"
+                          render={({ field }) => (
+                            <FormItem className="md:col-span-2">
+                              <FormLabel>Title</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Top 10 Tips for First-Time Home Buyers" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={blogForm.control}
+                          name="author"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Author</FormLabel>
+                              <FormControl>
+                                <Input placeholder="John Doe" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={blogForm.control}
+                          name="category"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Category</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Buying Guide, Market Insights..." {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <div className="md:col-span-2">
+                          <FormLabel>Cover Image</FormLabel>
+                          <ImageUpload
+                            images={blogImage ? [blogImage] : []}
+                            onImagesChange={(images) => setBlogImage(images[0] || "")}
+                          />
+                        </div>
+                      </div>
+
+                      <FormField
+                        control={blogForm.control}
+                        name="excerpt"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Excerpt</FormLabel>
+                            <FormControl>
+                              <Textarea rows={3} placeholder="A short summary of the article..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={blogForm.control}
+                        name="content"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Content</FormLabel>
+                            <FormControl>
+                              <Textarea rows={10} placeholder="Full article content..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <Button type="submit" className="w-full md:w-auto" disabled={createBlogPost.isPending}>
+                        {createBlogPost.isPending ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Saving post...
+                          </>
+                        ) : (
+                          "Publish blog post"
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Blog Posts</CardTitle>
+                  <CardDescription>View and delete existing blog posts</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {blogPosts.length === 0 ? (
+                      <p className="text-muted-foreground text-center py-8">No blog posts yet</p>
+                    ) : (
+                      blogPosts.map((post) => (
+                        <div
+                          key={post.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                        >
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{post.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              By {post.author} • {post.category} • {post.published ? "Published" : "Draft"}
+                            </p>
+                          </div>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this blog post?")) {
+                                deleteBlogPost.mutate(post.id);
+                              }
+                            }}
+                            disabled={deleteBlogPost.isPending}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
