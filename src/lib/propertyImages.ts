@@ -22,6 +22,12 @@ export const resolvePropertyImages = (
   imageUrls?: string[] | null,
   primaryImageUrl?: string | null,
 ) => {
+  // If we have image URLs from storage, use them directly
+  if (imageUrls && imageUrls.length > 0) {
+    return imageUrls;
+  }
+
+  // Otherwise fall back to mapped images or primary image
   const resolved = (imageUrls || [])
     .map((url) => resolveImagePath(url))
     .filter(Boolean);

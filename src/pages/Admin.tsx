@@ -2,9 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Shield, LogOut } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Loader2, Shield, LogOut, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { Tables } from "@/integrations/supabase/types";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ImageUpload } from "@/components/ImageUpload";
 import {
   Form,
   FormControl,
@@ -41,7 +43,6 @@ const propertySchema = z.object({
     required_error: "Select a status",
   }),
   propertyType: z.string().min(2, "Property type is required"),
-  imageUrls: z.string().optional(),
 });
 
 const defaultValues = {
@@ -54,7 +55,6 @@ const defaultValues = {
   sqft: 1500,
   status: "For Sale" as const,
   propertyType: "House",
-  imageUrls: "",
 };
 
 type PropertyFormValues = z.infer<typeof propertySchema>;
@@ -65,6 +65,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -91,6 +92,19 @@ const Admin = () => {
     defaultValues,
   });
 
+  const { data: properties = [] } = useQuery<Tables<'properties'>[]>({
+    queryKey: ['properties'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate('/');
@@ -98,12 +112,7 @@ const Admin = () => {
 
   const createListing = useMutation({
     mutationFn: async (values: PropertyFormValues) => {
-      const { propertyType, imageUrls, ...rest } = values;
-
-      const parsedImageUrls = (imageUrls || "")
-        .split(/\n|,/)
-        .map((url) => url.trim())
-        .filter((url) => url.length > 0);
+      const { propertyType, ...rest } = values;
 
       const payload = {
         title: rest.title,
@@ -115,8 +124,8 @@ const Admin = () => {
         status: rest.status,
         description: rest.description?.trim() || null,
         property_type: propertyType.trim() || 'House',
-        image_url: parsedImageUrls[0] || null,
-        image_urls: parsedImageUrls.length ? parsedImageUrls : null,
+        image_url: uploadedImages[0] || null,
+        image_urls: uploadedImages.length > 0 ? uploadedImages : null,
       };
 
       const { error } = await supabase.from("properties").insert([payload]);
@@ -132,10 +141,36 @@ const Admin = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       form.reset(defaultValues);
+      setUploadedImages([]);
     },
     onError: (error: Error) => {
       toast({
         title: "Unable to create listing",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteProperty = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("properties")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["properties"] });
+      toast({
+        title: "Property deleted",
+        description: "The property has been removed successfully.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Unable to delete property",
         description: error.message,
         variant: "destructive",
       });
@@ -317,26 +352,13 @@ const Admin = () => {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="imageUrls"
-                      render={({ field }) => (
-                        <FormItem className="md:col-span-2">
-                          <FormLabel>Image filenames or URLs</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              rows={3}
-                              placeholder={`property-1.jpg\nhttps://example.com/second-image.jpg`}
-                              {...field}
-                            />
-                          </FormControl>
-                          <p className="text-xs text-muted-foreground">
-                            Enter one image per line or separate them with commas. The first image becomes the cover photo.
-                          </p>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="md:col-span-2">
+                      <FormLabel>Property Images</FormLabel>
+                      <ImageUpload
+                        images={uploadedImages}
+                        onImagesChange={setUploadedImages}
+                      />
+                    </div>
                   </div>
 
                   <FormField
@@ -365,6 +387,46 @@ const Admin = () => {
                   </Button>
                 </form>
               </Form>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Manage Properties</CardTitle>
+              <CardDescription>View and delete existing properties</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {properties.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-8">No properties yet</p>
+                ) : (
+                  properties.map((property) => (
+                    <div
+                      key={property.id}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                    >
+                      <div className="flex-1">
+                        <h3 className="font-semibold">{property.title}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {property.location} • ${property.price.toLocaleString()} • {property.status}
+                        </p>
+                      </div>
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => {
+                          if (window.confirm("Are you sure you want to delete this property?")) {
+                            deleteProperty.mutate(property.id);
+                          }
+                        }}
+                        disabled={deleteProperty.isPending}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>
