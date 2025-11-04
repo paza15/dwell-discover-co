@@ -30,6 +30,25 @@ const PropertyDetail = () => {
     },
   });
 
+  const propertyImages = useMemo(
+    () => resolvePropertyImages(property?.image_urls as string[] | null, property?.image_url),
+    [property?.image_urls, property?.image_url],
+  );
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [property?.id]);
+
+  const showPreviousImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
+  };
+
+  const showNextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -45,25 +64,6 @@ const PropertyDetail = () => {
       </div>
     );
   }
-
-  const propertyImages = useMemo(
-    () => resolvePropertyImages(property.image_urls as string[] | null, property.image_url),
-    [property.image_urls, property.image_url],
-  );
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [property.id]);
-
-  const showPreviousImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
-  };
-
-  const showNextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
-  };
 
   return (
     <div className="min-h-screen bg-background">
