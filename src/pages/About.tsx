@@ -19,16 +19,16 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-black/90 backdrop-blur-sm text-white">
+      <nav className="bg-black/90 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
               <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="flex items-center gap-6">
-              <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
-              <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
-              <Link to="/blog" className="hover:text-accent transition-colors">{t('blog')}</Link>
+              <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
+              <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="text-accent font-semibold">{t('about')}</Link>
               <LanguageSwitcher />
               <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
@@ -120,6 +120,23 @@ const About = () => {
           </Button>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-foreground text-background py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-4">
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+            </div>
+            <p className="text-background/70 mb-6">
+              Your trusted partner in real estate
+            </p>
+            <p className="text-background/50 text-sm">
+              © 2025 iDeal Properties. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
