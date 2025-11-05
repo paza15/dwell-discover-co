@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Home, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import logo from "@/assets/logo-new.png";
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -63,19 +64,19 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-primary text-primary-foreground">
+      <nav className="bg-black/90 backdrop-blur-sm text-white">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <Home className="w-8 h-8" />
-              <span className="text-2xl font-bold">EstateHub</span>
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
             <div className="flex items-center gap-6">
               <Link to="/buy" className="hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="hover:text-accent transition-colors">{t('rent')}</Link>
+              <Link to="/blog" className="hover:text-accent transition-colors">{t('blog')}</Link>
               <Link to="/about" className="hover:text-accent transition-colors">{t('about')}</Link>
               <LanguageSwitcher />
-              <Button variant="secondary" asChild>
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
