@@ -7,6 +7,7 @@ import PropertyFilters, { FilterValues } from "@/components/PropertyFilters";
 import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
+import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-new.png";
@@ -160,7 +161,8 @@ const Rent = () => {
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
             </p>
-            <p className="text-background/50 text-sm">
+            <SocialLinks />
+            <p className="text-background/50 text-sm mt-6">
               © 2025 iDeal Properties. All rights reserved.
             </p>
           </div>

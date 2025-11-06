@@ -6,6 +6,7 @@ import PropertyCard from "@/components/PropertyCard";
 import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
+import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -241,7 +242,8 @@ const Index = () => {
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
             </p>
-            <p className="text-background/50 text-sm">
+            <SocialLinks />
+            <p className="text-background/50 text-sm mt-6">
               © 2025 EstateHub. All rights reserved.
             </p>
           </div>

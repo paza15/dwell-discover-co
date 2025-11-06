@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
+import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -243,7 +244,8 @@ const Contact = () => {
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
             </p>
-            <p className="text-background/50 text-sm">
+            <SocialLinks />
+            <p className="text-background/50 text-sm mt-6">
               © 2025 iDeal Properties. All rights reserved.
             </p>
           </div>

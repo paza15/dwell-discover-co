@@ -10,6 +10,7 @@ import { BedDouble, Bath, Square, MapPin, ArrowLeft, ChevronLeft, ChevronRight }
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
 import ImageZoom from "@/components/ImageZoom";
+import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo-new.png";
 import { resolvePropertyImages } from "@/lib/propertyImages";
@@ -113,6 +114,9 @@ const PropertyDetail = () => {
                 <ImageZoom 
                   src={propertyImages[currentImageIndex]} 
                   alt={`${property.title} image ${currentImageIndex + 1}`}
+                  onPrevious={showPreviousImage}
+                  onNext={showNextImage}
+                  showNavigation={propertyImages.length > 1}
                 />
                 {propertyImages.length > 1 && (
                   <>
@@ -224,7 +228,8 @@ const PropertyDetail = () => {
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
             </p>
-            <p className="text-background/50 text-sm">
+            <SocialLinks />
+            <p className="text-background/50 text-sm mt-6">
               © 2025 iDeal Properties. All rights reserved.
             </p>
           </div>
