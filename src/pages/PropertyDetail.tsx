@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BedDouble, Bath, Square, MapPin, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import MobileMenu from "@/components/MobileMenu";
+import ImageZoom from "@/components/ImageZoom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo-new.png";
 import { resolvePropertyImages } from "@/lib/propertyImages";
@@ -74,7 +76,7 @@ const PropertyDetail = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
-            <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
               <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
@@ -84,6 +86,7 @@ const PropertyDetail = () => {
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>
@@ -106,6 +109,10 @@ const PropertyDetail = () => {
                   src={propertyImages[currentImageIndex]}
                   alt={`${property.title} image ${currentImageIndex + 1}`}
                   className="w-full h-full object-cover"
+                />
+                <ImageZoom 
+                  src={propertyImages[currentImageIndex]} 
+                  alt={`${property.title} image ${currentImageIndex + 1}`}
                 />
                 {propertyImages.length > 1 && (
                   <>

@@ -6,6 +6,7 @@ import PropertyCard from "@/components/PropertyCard";
 import PropertyFilters, { FilterValues } from "@/components/PropertyFilters";
 import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import MobileMenu from "@/components/MobileMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-new.png";
@@ -74,7 +75,7 @@ const Buy = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
-            <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
               <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
@@ -84,6 +85,7 @@ const Buy = () => {
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>

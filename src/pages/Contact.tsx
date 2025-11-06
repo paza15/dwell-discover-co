@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import MobileMenu from "@/components/MobileMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -70,7 +71,7 @@ const Contact = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
             </Link>
-            <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
               <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
               <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
               <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
@@ -80,6 +81,7 @@ const Contact = () => {
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>

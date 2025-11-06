@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
 import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import MobileMenu from "@/components/MobileMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -80,6 +81,7 @@ const Index = () => {
                 <Link to="/contact">{t('contactUs')}</Link>
               </Button>
             </div>
+            <MobileMenu />
           </div>
         </div>
       </nav>
