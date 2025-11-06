@@ -80,7 +80,7 @@ const Blog = () => {
               {blogPosts.map((post) => (
                 <Card key={post.id} className="overflow-hidden hover:shadow-[var(--shadow-elevated)] transition-[var(--transition-smooth)] border-border">
                   {post.image_url && (
-                    <img 
+                    <img
                       src={post.image_url}
                       alt={post.title}
                       className="w-full h-48 object-cover"
@@ -90,10 +90,10 @@ const Blog = () => {
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                       <span className="inline-flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        {new Date(post.created_at).toLocaleDateString('en-US', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
+                        {new Date(post.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
                         })}
                       </span>
                       <span className="inline-flex items-center gap-1">
@@ -110,8 +110,8 @@ const Blog = () => {
                     <p className="text-muted-foreground mb-4">
                       {post.excerpt}
                     </p>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full"
                       asChild
                     >
@@ -132,7 +132,7 @@ const Blog = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate

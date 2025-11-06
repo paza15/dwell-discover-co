@@ -109,14 +109,14 @@ const Contact = () => {
                   {t('reachOut')}
                 </p>
               </div>
-              
+
               <div className="space-y-6">
                 <Card className="p-6 border-border">
                   <div className="flex items-start gap-4">
                     <Phone className="w-6 h-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">{t('phone')}</h3>
-                      <p className="text-muted-foreground">(555) 123-4567</p>
+                      <p className="text-muted-foreground">+355-674087114</p>
                     </div>
                   </div>
                 </Card>
@@ -136,7 +136,7 @@ const Contact = () => {
                     <MapPin className="w-6 h-6 text-primary mt-1" />
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">{t('address')}</h3>
-                      <p className="text-muted-foreground">123 Main St, City, ST 12345</p>
+                      <p className="text-muted-foreground">Besnik Sykja, Shkodër 4001, Albania</p>
                     </div>
                   </div>
                 </Card>
@@ -186,7 +186,7 @@ const Contact = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="(555) 123-4567"
+                    placeholder="+355674087114"
                   />
                 </div>
 
@@ -221,7 +221,7 @@ const Contact = () => {
           <div className="max-w-4xl mx-auto">
             <div className="aspect-video bg-muted rounded-lg overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878459253!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sus!4v1635959220374!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2962.0086205657985!2d19.5117463!3d42.0644346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134e0150aa7ca1f7%3A0x3004de9d0bd2a5fd!2siDeal%20Properties%20%E2%80%93%20Real%20Estate%20Shkod%C3%ABr!5e0!3m2!1sde!2sde!4v1762457710013!5m2!1sde!2sde"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

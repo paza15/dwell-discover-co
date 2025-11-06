@@ -13,7 +13,7 @@ const SocialLinks = () => {
         <Facebook className="h-5 w-5" />
       </a>
       <a
-        href="https://www.instagram.com"
+        href="https://www.instagram.com/idealproperties.shkoder/#"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/10 text-background hover:bg-background/20 transition-colors"
@@ -22,7 +22,7 @@ const SocialLinks = () => {
         <Instagram className="h-5 w-5" />
       </a>
       <a
-        href="https://www.tiktok.com"
+        href="https://www.tiktok.com/@idealpropertiesshkoder"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/10 text-background hover:bg-background/20 transition-colors"

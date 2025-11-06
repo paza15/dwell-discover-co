@@ -111,8 +111,8 @@ const PropertyDetail = () => {
                   alt={`${property.title} image ${currentImageIndex + 1}`}
                   className="w-full h-full object-cover"
                 />
-                <ImageZoom 
-                  src={propertyImages[currentImageIndex]} 
+                <ImageZoom
+                  src={propertyImages[currentImageIndex]}
                   alt={`${property.title} image ${currentImageIndex + 1}`}
                   onPrevious={showPreviousImage}
                   onNext={showNextImage}
@@ -150,11 +150,10 @@ const PropertyDetail = () => {
                       key={image + index}
                       type="button"
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`relative h-16 w-20 overflow-hidden rounded-md border transition ${
-                        index === currentImageIndex
+                      className={`relative h-16 w-20 overflow-hidden rounded-md border transition ${index === currentImageIndex
                           ? 'border-primary ring-2 ring-primary/60'
                           : 'border-border hover:border-primary/60'
-                      }`}
+                        }`}
                       aria-label={`Show image ${index + 1}`}
                     >
                       <img src={image} alt={`${property.title} thumbnail ${index + 1}`} className="h-full w-full object-cover" />
@@ -171,7 +170,7 @@ const PropertyDetail = () => {
                 <MapPin className="w-5 h-5 mr-2" />
                 <span className="text-lg">{property.location}</span>
               </div>
-              
+
               <div className="text-5xl font-bold text-primary mb-8">
                 ${property.price.toLocaleString()}{property.status === 'For Rent' ? '/mo' : ''}
               </div>
@@ -223,7 +222,7 @@ const PropertyDetail = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate

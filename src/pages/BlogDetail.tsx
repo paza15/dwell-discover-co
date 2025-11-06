@@ -77,8 +77,8 @@ const BlogDetail = () => {
       {/* Article Content */}
       <article className="py-12 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4 max-w-4xl">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="mb-6"
             onClick={() => navigate("/blog")}
           >
@@ -87,7 +87,7 @@ const BlogDetail = () => {
           </Button>
 
           {post.image_url && (
-            <img 
+            <img
               src={post.image_url}
               alt={post.title}
               className="w-full h-96 object-cover rounded-lg mb-8"
@@ -97,10 +97,10 @@ const BlogDetail = () => {
           <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
             <span className="inline-flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              {new Date(post.created_at).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {new Date(post.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </span>
             <span className="inline-flex items-center gap-1">
@@ -133,7 +133,7 @@ const BlogDetail = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate

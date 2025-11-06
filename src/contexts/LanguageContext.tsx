@@ -20,7 +20,7 @@ const translations = {
     blogTitle: 'Real Estate Insights & News',
     blogSubtitle: 'Stay informed with the latest trends, tips, and market updates from our expert team',
     readMore: 'Read More',
-    
+
     // Hero
     findDreamHome: 'Find Your Dream Home',
     discoverProperty: 'Discover the perfect property that matches your lifestyle and budget',
@@ -29,7 +29,7 @@ const translations = {
     forSale: 'For Sale',
     forRent: 'For Rent',
     newListings: 'New Listings',
-    
+
     // Filters
     filters: 'Filters',
     priceRange: 'Price Range',
@@ -45,7 +45,7 @@ const translations = {
     villa: 'Villa',
     clearFilters: 'Clear Filters',
     applyFilters: 'Apply Filters',
-    
+
     // Property
     beds: 'Beds',
     baths: 'Baths',
@@ -56,18 +56,18 @@ const translations = {
     noDescription: 'No description available for this property.',
     ourAgents: 'Our Real Estate Agents',
     ourAgentsDescription: 'Meet our experienced team of real estate professionals ready to help you find your perfect property.',
-    
+
     // Buy Page
     propertiesForSale: 'Properties For Sale',
     dreamHomeDescription: 'Discover your dream home from our curated collection of premium properties',
     loadingProperties: 'Loading properties...',
     noPropertiesForSale: 'No properties available for sale at the moment.',
-    
+
     // Rent Page
     propertiesForRent: 'Properties For Rent',
     rentalDescription: 'Find the perfect rental property that feels like home',
     noPropertiesForRent: 'No properties available for rent at the moment.',
-    
+
     // About Page
     aboutEstateHub: 'About EstateHub',
     trustedPartner: 'Your trusted partner in finding the perfect property',
@@ -88,7 +88,7 @@ const translations = {
     readyToStart: 'Ready to Get Started?',
     findPropertyTogether: 'Let\'s find your perfect property together',
     contactUsToday: 'Contact Us Today',
-    
+
     // Contact Page
     getInTouch: 'Get In Touch',
     loveToHear: 'We\'d love to hear from you. Let us know how we can help.',
@@ -114,7 +114,7 @@ const translations = {
   sq: {
     // Navigation
     buy: 'Blej',
-    rent: 'Qera',
+    rent: 'Qira',
     about: 'Rreth Nesh',
     contactUs: 'Na Kontaktoni',
     ownerPortal: 'Portali i Pronarit',
@@ -122,16 +122,16 @@ const translations = {
     blogTitle: 'Njohuri dhe Lajme për Pasuritë e Paluajtshme',
     blogSubtitle: 'Qëndroni të informuar me tendencat, këshillat dhe përditësimet më të fundit të tregut nga ekipi ynë ekspert',
     readMore: 'Lexo Më Shumë',
-    
+
     // Hero
     findDreamHome: 'Gjeni Shtëpinë e Ëndrrave',
     discoverProperty: 'Zbuloni pronën perfekte që përputhet me stilin tuaj të jetesës dhe buxhetin',
     search: 'Kërko',
     searchPlaceholder: 'Vendndodhje, lloj prone ose fjalë kyçe...',
     forSale: 'Për Shitje',
-    forRent: 'Për Qera',
+    forRent: 'Për Qira',
     newListings: 'Shpallje të Reja',
-    
+
     // Filters
     filters: 'Filtrat',
     priceRange: 'Rangu i Çmimit',
@@ -147,7 +147,7 @@ const translations = {
     villa: 'Vilë',
     clearFilters: 'Pastro Filtrat',
     applyFilters: 'Apliko Filtrat',
-    
+
     // Property
     beds: 'Shtretër',
     baths: 'Banjo',
@@ -158,18 +158,18 @@ const translations = {
     noDescription: 'Nuk ka përshkrim të disponueshëm për këtë pronë.',
     ourAgents: 'Agjentët Tanë të Pasurive të Paluajtshme',
     ourAgentsDescription: 'Njihuni me ekipin tonë të përvuarëshem të profesionistëve të pasurive të paluajtshme të gatshëm t\'ju ndihmojnë të gjeni pronën tuaj të përsosur.',
-    
+
     // Buy Page
     propertiesForSale: 'Prona Për Shitje',
     dreamHomeDescription: 'Zbuloni shtëpinë e ëndrrave tuaja nga koleksioni ynë i pronave premium',
     loadingProperties: 'Po ngarkohen pronat...',
     noPropertiesForSale: 'Nuk ka prona të disponueshme për shitje në këtë moment.',
-    
+
     // Rent Page
-    propertiesForRent: 'Prona Për Qera',
-    rentalDescription: 'Gjeni pronën perfekte për qera që të ndihet si shtëpia juaj',
-    noPropertiesForRent: 'Nuk ka prona të disponueshme për qera në këtë moment.',
-    
+    propertiesForRent: 'Prona Për Qira',
+    rentalDescription: 'Gjeni pronën perfekte për qira që të ndihet si shtëpia juaj',
+    noPropertiesForRent: 'Nuk ka prona të disponueshme për qira në këtë moment.',
+
     // About Page
     aboutEstateHub: 'Rreth EstateHub',
     trustedPartner: 'Partneri juaj i besuar në gjetjen e pronës perfekte',
@@ -190,7 +190,7 @@ const translations = {
     readyToStart: 'Gati për të Filluar?',
     findPropertyTogether: 'Le të gjejmë pronën tuaj perfekte së bashku',
     contactUsToday: 'Na Kontaktoni Sot',
-    
+
     // Contact Page
     getInTouch: 'Na Kontaktoni',
     loveToHear: 'Do të donim të dëgjonim nga ju. Na tregoni se si mund t\'ju ndihmojmë.',

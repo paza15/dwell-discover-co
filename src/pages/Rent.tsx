@@ -42,7 +42,7 @@ const Rent = () => {
 
   const filteredProperties = useMemo(() => {
     if (!properties) return [];
-    
+
     return properties.filter((property) => {
       if (filters.minPrice && property.price < parseFloat(filters.minPrice)) return false;
       if (filters.maxPrice && property.price > parseFloat(filters.maxPrice)) return false;
@@ -91,7 +91,7 @@ const Rent = () => {
       <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <PropertyFilters onFilterChange={setFilters} />
-          
+
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">{t('loadingProperties')}</p>
@@ -131,7 +131,7 @@ const Rent = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Real Estate Specialist"
               image={agent1}
@@ -139,7 +139,7 @@ const Rent = () => {
               phone="+355 69 123 4567"
               description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
             />
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Property Consultant"
               image={agent2}
@@ -156,7 +156,7 @@ const Rent = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate

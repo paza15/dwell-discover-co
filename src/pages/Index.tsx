@@ -19,7 +19,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 const Index = () => {
   const { t } = useLanguage();
-  
+
   // Fetch properties from database
   const { data: properties, isLoading } = useQuery<Tables<'properties'>[]>({
     queryKey: ['properties'],
@@ -183,7 +183,7 @@ const Index = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Real Estate Specialist"
               image={agent1}
@@ -191,7 +191,7 @@ const Index = () => {
               phone="+355 69 123 4567"
               description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
             />
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Property Consultant"
               image={agent2}
@@ -216,7 +216,7 @@ const Index = () => {
             <Card className="p-6 text-center border-border">
               <Phone className="w-8 h-8 text-primary mx-auto mb-4" />
               <h3 className="font-semibold mb-2 text-foreground">Phone</h3>
-              <p className="text-muted-foreground">(555) 123-4567</p>
+              <p className="text-muted-foreground"> +355-674087114 </p>
             </Card>
             <Card className="p-6 text-center border-border">
               <Mail className="w-8 h-8 text-primary mx-auto mb-4" />
@@ -226,7 +226,7 @@ const Index = () => {
             <Card className="p-6 text-center border-border">
               <MapPin className="w-8 h-8 text-primary mx-auto mb-4" />
               <h3 className="font-semibold mb-2 text-foreground">Address</h3>
-              <p className="text-muted-foreground">123 Main St, City, ST 12345</p>
+              <p className="text-muted-foreground">Besnik Sykja, Shkodër 4001, Albania</p>
             </Card>
           </div>
         </div>

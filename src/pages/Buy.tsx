@@ -20,7 +20,7 @@ const Buy = () => {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
-  
+
   const [filters, setFilters] = useState<FilterValues>({
     minPrice: '',
     maxPrice: '',
@@ -45,18 +45,18 @@ const Buy = () => {
 
   const filteredProperties = useMemo(() => {
     if (!properties) return [];
-    
+
     return properties.filter((property) => {
       // Search query filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        const matchesSearch = 
+        const matchesSearch =
           property.title.toLowerCase().includes(query) ||
           property.location.toLowerCase().includes(query) ||
           property.description?.toLowerCase().includes(query);
         if (!matchesSearch) return false;
       }
-      
+
       // Price filters
       if (filters.minPrice && property.price < parseFloat(filters.minPrice)) return false;
       if (filters.maxPrice && property.price > parseFloat(filters.maxPrice)) return false;
@@ -105,7 +105,7 @@ const Buy = () => {
       <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <PropertyFilters onFilterChange={setFilters} />
-          
+
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">{t('loadingProperties')}</p>
@@ -145,7 +145,7 @@ const Buy = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Real Estate Specialist"
               image={agent1}
@@ -153,7 +153,7 @@ const Buy = () => {
               phone="+355 69 123 4567"
               description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
             />
-            <AgentCard 
+            <AgentCard
               name="Agent Name"
               role="Property Consultant"
               image={agent2}
@@ -170,7 +170,7 @@ const Buy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate

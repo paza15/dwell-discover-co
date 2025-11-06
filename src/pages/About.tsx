@@ -10,7 +10,7 @@ import logo from "@/assets/logo-new.png";
 
 const About = () => {
   const { t } = useLanguage();
-  
+
   const stats = [
     { icon: Home, value: "500+", label: t('propertiesSold') },
     { icon: Users, value: "1000+", label: t('happyClients') },
@@ -129,7 +129,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto brightness-0 invert" />
+              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
               Your trusted partner in real estate
