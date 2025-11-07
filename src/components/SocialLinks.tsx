@@ -38,7 +38,7 @@ const SocialLinks = () => {
         </svg>
       </a>
       <a
-        href="https://g.page/r/YOUR_GOOGLE_PLACE_ID/review"
+        href="https://www.google.com/search?q=ideal+properties+shkoder"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/10 text-background hover:bg-background/20 transition-colors"

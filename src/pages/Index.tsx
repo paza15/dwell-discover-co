@@ -122,8 +122,8 @@ const Index = () => {
                 ))}
               </div>
               <div className="text-center mt-12">
-                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-lift">
-                  View All Properties
+                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-lift" asChild>
+                  <Link to="/buy">View All Properties</Link>
                 </Button>
               </div>
             </>
