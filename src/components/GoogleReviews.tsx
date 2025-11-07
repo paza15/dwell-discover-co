@@ -1,5 +1,7 @@
 import { Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Review {
   id: number;
@@ -10,30 +12,29 @@ interface Review {
 }
 
 const GoogleReviews = () => {
-  // Replace these with your actual Google reviews
-  const reviews: Review[] = [
-    {
-      id: 1,
-      author: "John Doe",
-      rating: 5,
-      text: "Excellent service! Found my dream home with their help. Highly professional and responsive team.",
-      date: "2 weeks ago"
+  const { data: reviewsData, isLoading } = useQuery({
+    queryKey: ['google-reviews'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('fetch-google-reviews');
+      if (error) throw error;
+      return data as { reviews: Review[], totalRating: number, totalReviews: number };
     },
-    {
-      id: 2,
-      author: "Jane Smith",
-      rating: 5,
-      text: "Very satisfied with the property search experience. They understood exactly what I was looking for.",
-      date: "1 month ago"
-    },
-    {
-      id: 3,
-      author: "Mike Johnson",
-      rating: 5,
-      text: "Professional real estate agents who really care about their clients. Great experience from start to finish!",
-      date: "3 weeks ago"
-    }
-  ];
+    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+  });
+
+  const reviews = reviewsData?.reviews || [];
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-muted-foreground">Loading reviews...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-background">
@@ -41,7 +42,7 @@ const GoogleReviews = () => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-foreground mb-4">What Our Clients Say</h2>
           <p className="text-muted-foreground text-lg">
-            Real reviews from real customers
+            {reviewsData?.totalReviews} Google reviews • {reviewsData?.totalRating?.toFixed(1)} ⭐
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
