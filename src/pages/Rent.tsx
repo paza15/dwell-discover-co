@@ -10,7 +10,7 @@ import MobileMenu from "@/components/MobileMenu";
 import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-white.png";
 import agent1 from "@/assets/agent-1.jpg";
 import agent2 from "@/assets/agent-2.jpg";
 import { resolvePropertyImage } from "@/lib/propertyImages";

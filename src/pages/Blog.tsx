@@ -6,7 +6,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-white.png";
 
 const Blog = () => {
   const { t } = useLanguage();

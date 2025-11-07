@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Phone, Mail, MapPin } from "lucide-react";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-white.png";
 
 const Contact = () => {
   const { t } = useLanguage();

@@ -12,7 +12,7 @@ import MobileMenu from "@/components/MobileMenu";
 import ImageZoom from "@/components/ImageZoom";
 import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-white.png";
 import { resolvePropertyImages } from "@/lib/propertyImages";
 
 const PropertyDetail = () => {
