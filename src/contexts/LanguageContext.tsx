@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type Language = 'en' | 'sq';
+type Language = 'en' | 'al';
 
 interface LanguageContextType {
   language: Language;
@@ -111,7 +111,7 @@ const translations = {
     pleaseTryAgain: 'Please try again or reach out through another channel.',
     sendingMessage: 'Sending...',
   },
-  sq: {
+  al: {
     // Navigation
     buy: 'Blej',
     rent: 'Qira',
