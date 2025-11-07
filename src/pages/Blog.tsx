@@ -28,7 +28,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-black/90 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="bg-black/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">

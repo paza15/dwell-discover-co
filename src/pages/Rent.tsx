@@ -56,7 +56,7 @@ const Rent = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-black/90 backdrop-blur-sm">
+      <nav className="bg-black/95 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
