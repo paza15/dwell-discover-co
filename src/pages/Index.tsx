@@ -7,6 +7,7 @@ import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
 import SocialLinks from "@/components/SocialLinks";
+import GoogleReviews from "@/components/GoogleReviews";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -202,6 +203,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Google Reviews Section */}
+      <GoogleReviews />
 
       {/* Contact Section */}
       <section className="py-20 bg-background">
