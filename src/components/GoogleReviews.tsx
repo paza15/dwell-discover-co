@@ -12,25 +12,51 @@ interface Review {
 }
 
 const GoogleReviews = () => {
-  const { data: reviewsData, isLoading } = useQuery({
-    queryKey: ['google-reviews'],
+  const {
+    data: reviewsData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["google-reviews"],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('fetch-google-reviews');
-      if (error) throw error;
-      return data as { reviews: Review[], totalRating: number, totalReviews: number };
+      const { data, error } = await supabase.functions.invoke("fetch-google-reviews");
+      if (error) {
+        console.error("fetch-google-reviews error:", error);
+        throw error;
+      }
+      return data as {
+        reviews: Review[];
+        totalRating: number | null;
+        totalReviews: number;
+      };
     },
-    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+    staleTime: 1000 * 60 * 60,
   });
 
   const reviews = reviewsData?.reviews || [];
+  const hasStats =
+    typeof reviewsData?.totalRating === "number" &&
+    typeof reviewsData?.totalReviews === "number";
 
   if (isLoading) {
     return (
       <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-muted-foreground">Loading reviews...</p>
-          </div>
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">Loading reviews...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    console.error("GoogleReviews query error:", error);
+    return (
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">
+            Could not load Google reviews right now.
+          </p>
         </div>
       </section>
     );
@@ -40,34 +66,49 @@ const GoogleReviews = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">What Our Clients Say</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-4">
+            What Our Clients Say
+          </h2>
           <p className="text-muted-foreground text-lg">
-            {reviewsData?.totalReviews} Google reviews • {reviewsData?.totalRating?.toFixed(1)} ⭐
+            {hasStats
+              ? `${reviewsData!.totalReviews} Google reviews • ${reviewsData!.totalRating!.toFixed(
+                1
+              )} ⭐`
+              : "Google reviews"}
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {reviews.map((review) => (
-            <Card key={review.id} className="p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < review.rating
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-muted-foreground"
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="text-foreground mb-4 line-clamp-4">{review.text}</p>
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-semibold text-foreground">{review.author}</span>
-                <span className="text-muted-foreground">{review.date}</span>
-              </div>
-            </Card>
-          ))}
-        </div>
+
+        {reviews.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {reviews.map((review) => (
+              <Card key={review.id} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${i < review.rating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-muted-foreground"
+                        }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4 line-clamp-4">{review.text}</p>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-semibold text-foreground">
+                    {review.author}
+                  </span>
+                  <span className="text-muted-foreground">{review.date}</span>
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-muted-foreground">
+            No Google reviews available yet.
+          </div>
+        )}
+
         <div className="text-center mt-8">
           <a
             href="https://www.google.com/search?q=ideal+properties+shkoder"
