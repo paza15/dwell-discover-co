@@ -9,7 +9,7 @@ const LanguageSwitcher = () => {
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => setLanguage(language === 'al' ? 'al' : 'en')}
+      onClick={() => setLanguage(language === 'al' ? 'en' : 'al')}
       className="gap-2 text-accent hover:text-accent/80 hover:bg-accent/10 font-semibold"
     >
       <Globe className="w-4 h-4" />
