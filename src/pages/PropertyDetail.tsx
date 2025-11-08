@@ -1,252 +1,131 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { Star } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import type { Tables } from "@/integrations/supabase/types";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BedDouble, Bath, Square, MapPin, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import MobileMenu from "@/components/MobileMenu";
-import ImageZoom from "@/components/ImageZoom";
-import SocialLinks from "@/components/SocialLinks";
-import { useLanguage } from "@/contexts/LanguageContext";
-import logo from "@/assets/logo-white.png";
-import { resolvePropertyImages } from "@/lib/propertyImages";
 
-const PropertyDetail = () => {
-  const { id } = useParams();
-  const { t, language } = useLanguage();
+interface Review {
+  id: number;
+  author: string;
+  rating: number;
+  text: string;
+  date: string;
+}
 
-  const { data: property, isLoading } = useQuery<Tables<'properties'>>({
-    queryKey: ['property', id],
+const GoogleReviews = () => {
+  const {
+    data: reviewsData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["google-reviews"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('properties')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) throw error;
-      return data as Tables<'properties'>;
+      const { data, error } = await supabase.functions.invoke("fetch-google-reviews");
+      if (error) {
+        console.error("fetch-google-reviews error:", error);
+        throw error;
+      }
+      return data as {
+        reviews: Review[];
+        totalRating: number | null;
+        totalReviews: number;
+      };
     },
+    staleTime: 1000 * 60 * 60,
   });
 
-  const propertyImages = useMemo(
-    () => resolvePropertyImages(property?.image_urls as string[] | null, property?.image_url),
-    [property?.image_urls, property?.image_url],
-  );
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [property?.id]);
-
-  const showPreviousImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
-  };
-
-  const showNextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % propertyImages.length);
-  };
+  const reviews = reviewsData?.reviews || [];
+  const hasStats =
+    typeof reviewsData?.totalRating === "number" &&
+    typeof reviewsData?.totalReviews === "number";
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">{t('loadingProperties')}</p>
-      </div>
-    );
-  }
-
-  if (!property) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Property not found</p>
-      </div>
-    );
-  }
-
-  // Parse bilingual description
-  const getDescription = () => {
-    if (!property?.description) return '';
-    try {
-      const parsed = JSON.parse(property.description);
-      return language === 'al' ? (parsed.al || parsed.en || property.description) : (parsed.en || property.description);
-    } catch {
-      return property.description;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="bg-black/90 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="iDeal Properties" className="h-12 w-auto" />
-            </Link>
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/buy" className="text-white hover:text-accent transition-colors">{t('buy')}</Link>
-              <Link to="/rent" className="text-white hover:text-accent transition-colors">{t('rent')}</Link>
-              <Link to="/blog" className="text-white hover:text-accent transition-colors">{t('blog')}</Link>
-              <Link to="/about" className="text-white hover:text-accent transition-colors">{t('about')}</Link>
-              <LanguageSwitcher />
-              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
-                <Link to="/contact">{t('contactUs')}</Link>
-              </Button>
-            </div>
-            <MobileMenu />
-          </div>
-        </div>
-      </nav>
-
-      {/* Property Details */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <Button variant="ghost" asChild className="mb-6">
-            <Link to={property.status === 'For Sale' ? '/buy' : '/rent'}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('backToListings')}
-            </Link>
-          </Button>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Image */}
-            <div>
-              <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden">
-                <img
-                  src={propertyImages[currentImageIndex]}
-                  alt={`${property.title} image ${currentImageIndex + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                <ImageZoom
-                  src={propertyImages[currentImageIndex]}
-                  alt={`${property.title} image ${currentImageIndex + 1}`}
-                  onPrevious={showPreviousImage}
-                  onNext={showNextImage}
-                  showNavigation={propertyImages.length > 1}
-                />
-                {propertyImages.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={showPreviousImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/70 text-foreground shadow-lg transition hover:bg-background"
-                      aria-label="Previous image"
-                    >
-                      <ChevronLeft className="h-6 w-6" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={showNextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/70 text-foreground shadow-lg transition hover:bg-background"
-                      aria-label="Next image"
-                    >
-                      <ChevronRight className="h-6 w-6" />
-                    </button>
-                  </>
-                )}
-                <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground font-semibold text-lg px-4 py-2">
-                  {property.status}
-                </Badge>
-              </div>
-
-              {propertyImages.length > 1 && (
-                <div className="mt-4 flex items-center justify-center gap-3">
-                  {propertyImages.map((image, index) => (
-                    <button
-                      key={image + index}
-                      type="button"
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`relative h-16 w-20 overflow-hidden rounded-md border transition ${index === currentImageIndex
-                          ? 'border-primary ring-2 ring-primary/60'
-                          : 'border-border hover:border-primary/60'
-                        }`}
-                      aria-label={`Show image ${index + 1}`}
-                    >
-                      <img src={image} alt={`${property.title} thumbnail ${index + 1}`} className="h-full w-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Details */}
-            <div>
-              <h1 className="text-4xl font-bold mb-4 text-foreground">{property.title}</h1>
-              <div className="flex items-center text-muted-foreground mb-6">
-                <MapPin className="w-5 h-5 mr-2" />
-                <span className="text-lg">{property.location}</span>
-              </div>
-
-              <div className="text-5xl font-bold text-primary mb-8">
-                ${property.price.toLocaleString()}{property.status === 'For Rent' ? '/mo' : ''}
-              </div>
-
-              <Card className="p-6 mb-8">
-                <div className="grid grid-cols-3 gap-6">
-                  <div className="flex flex-col items-center">
-                    <BedDouble className="w-8 h-8 text-primary mb-2" />
-                    <span className="text-2xl font-bold text-foreground">{property.beds}</span>
-                    <span className="text-sm text-muted-foreground">{t('beds')}</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <Bath className="w-8 h-8 text-primary mb-2" />
-                    <span className="text-2xl font-bold text-foreground">{property.baths}</span>
-                    <span className="text-sm text-muted-foreground">{t('baths')}</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <Square className="w-8 h-8 text-primary mb-2" />
-                    <span className="text-2xl font-bold text-foreground">{property.sqft}</span>
-                    <span className="text-sm text-muted-foreground">sqft</span>
-                  </div>
-                </div>
-              </Card>
-
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4 text-foreground">{t('description')}</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {getDescription() || t('noDescription')}
-                </p>
-              </div>
-
-              <div className="mb-8">
-                <h3 className="text-xl font-bold mb-3 text-foreground">{t('propertyType')}</h3>
-                <Badge variant="outline" className="text-base px-4 py-2">
-                  {property.property_type}
-                </Badge>
-              </div>
-
-              <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
-                <Link to="/contact">{t('contactUs')}</Link>
-              </Button>
-            </div>
-          </div>
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">Loading reviews...</p>
         </div>
       </section>
+    );
+  }
 
-      {/* Footer */}
-      <footer className="bg-foreground text-background py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-4">
-              <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
-            </div>
-            <p className="text-background/70 mb-6">
-              Your trusted partner in real estate
-            </p>
-            <SocialLinks />
-            <p className="text-background/50 text-sm mt-6">
-              © 2025 iDeal Properties. All rights reserved.
-            </p>
-          </div>
+  if (isError) {
+    console.error("GoogleReviews query error:", error);
+    return (
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">
+            Could not load Google reviews right now.
+          </p>
         </div>
-      </footer>
-    </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-20 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
+            What Our Clients Say
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            {hasStats
+              ? `${reviewsData!.totalReviews} Google reviews • ${reviewsData!.totalRating!.toFixed(
+                1
+              )} ⭐`
+              : "Google reviews"}
+          </p>
+        </div>
+
+        {reviews.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {reviews.map((review) => (
+              <Card key={review.id} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${i < review.rating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-muted-foreground"
+                        }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4 line-clamp-4">{review.text}</p>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-semibold text-foreground">
+                    {review.author}
+                  </span>
+                  <span className="text-muted-foreground">{review.date}</span>
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-muted-foreground">
+            No Google reviews available yet.
+          </div>
+        )}
+
+        <div className="text-center mt-8">
+          <a
+            href="https://www.google.com/search?q=ideal+properties+shkoder"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-semibold"
+          >
+            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            See all reviews on Google
+          </a>
+        </div>
+      </div>
+    </section>
   );
 };
-
-export default PropertyDetail;
