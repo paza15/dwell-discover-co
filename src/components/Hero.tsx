@@ -74,9 +74,9 @@ const Hero = () => {
           <Button 
             variant="outline" 
             className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
-            onClick={() => navigate('/buy')}
+            onClick={() => navigate('/contact')}
           >
-            {t('newListings')}
+            {t('sell')}
           </Button>
         </div>
       </div>

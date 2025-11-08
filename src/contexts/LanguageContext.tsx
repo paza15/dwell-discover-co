@@ -28,7 +28,7 @@ const translations = {
     searchPlaceholder: 'Enter location, property type, or keyword...',
     forSale: 'For Sale',
     forRent: 'For Rent',
-    newListings: 'New Listings',
+    sell: 'Sell',
 
     // Filters
     filters: 'Filters',
@@ -130,7 +130,7 @@ const translations = {
     searchPlaceholder: 'Vendndodhje, lloj prone ose fjalë kyçe...',
     forSale: 'Për Shitje',
     forRent: 'Për Qira',
-    newListings: 'Shpallje të Reja',
+    sell: 'Shes',
 
     // Filters
     filters: 'Filtrat',
@@ -218,7 +218,7 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('al');
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.en] || key;
