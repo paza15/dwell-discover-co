@@ -63,42 +63,61 @@ const GoogleReviews = () => {
   }
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-gradient-to-b from-background via-background to-secondary/10">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            {hasStats
-              ? `${reviewsData!.totalReviews} Google reviews • ${reviewsData!.totalRating!.toFixed(
-                1
-              )} ⭐`
-              : "Google reviews"}
-          </p>
-        </div>
+        <h2 className="text-4xl font-bold text-center mb-4 text-foreground">
+          What Our Clients Say
+        </h2>
+        
+        {hasStats && (
+          <div className="mb-12 text-center">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-7 h-7 ${
+                      i < Math.round(reviewsData!.totalRating!)
+                        ? "fill-primary text-primary drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)]"
+                        : "text-muted-foreground/30"
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                {reviewsData!.totalRating!.toFixed(1)}
+              </span>
+            </div>
+            <p className="text-muted-foreground text-lg">
+              Based on <span className="font-semibold text-foreground">{reviewsData!.totalReviews}</span> reviews
+            </p>
+          </div>
+        )}
 
         {reviews.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
             {reviews.map((review) => (
-              <Card key={review.id} className="p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-5 h-5 ${i < review.rating
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-muted-foreground"
+              <Card key={review.id} className="p-6 hover-lift bg-gradient-to-br from-card to-card/50 border-border/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${
+                          i < review.rating
+                            ? "fill-primary text-primary drop-shadow-[0_0_6px_hsl(var(--primary)/0.4)]"
+                            : "text-muted-foreground/20"
                         }`}
-                    />
-                  ))}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <p className="text-foreground mb-4 line-clamp-4">{review.text}</p>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold text-foreground">
-                    {review.author}
-                  </span>
-                  <span className="text-muted-foreground">{review.date}</span>
+                <p className="text-muted-foreground mb-6 line-clamp-4 leading-relaxed text-sm">{review.text}</p>
+                <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                  <p className="font-semibold text-foreground">{review.author}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(review.date).toLocaleDateString()}
+                  </p>
                 </div>
               </Card>
             ))}

@@ -17,7 +17,7 @@ import { resolvePropertyImages } from "@/lib/propertyImages";
 
 const PropertyDetail = () => {
   const { id } = useParams();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const { data: property, isLoading } = useQuery<Tables<'properties'>>({
     queryKey: ['property', id],
@@ -67,6 +67,17 @@ const PropertyDetail = () => {
       </div>
     );
   }
+
+  // Parse bilingual description
+  const getDescription = () => {
+    if (!property?.description) return '';
+    try {
+      const parsed = JSON.parse(property.description);
+      return language === 'al' ? (parsed.al || parsed.en || property.description) : (parsed.en || property.description);
+    } catch {
+      return property.description;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -198,7 +209,7 @@ const PropertyDetail = () => {
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-foreground">{t('description')}</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  {property.description || t('noDescription')}
+                  {getDescription() || t('noDescription')}
                 </p>
               </div>
 
