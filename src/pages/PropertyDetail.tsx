@@ -187,11 +187,11 @@ const PropertyDetail = () => {
               </div>
 
               <Card className="p-6 mb-8">
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="flex flex-col items-center">
                     <BedDouble className="w-8 h-8 text-primary mb-2" />
                     <span className="text-2xl font-bold text-foreground">{property.beds}</span>
-                    <span className="text-sm text-muted-foreground">{t('beds')}</span>
+                    <span className="text-sm text-muted-foreground">{t('bedrooms')}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Bath className="w-8 h-8 text-primary mb-2" />
@@ -201,8 +201,32 @@ const PropertyDetail = () => {
                   <div className="flex flex-col items-center">
                     <Square className="w-8 h-8 text-primary mb-2" />
                     <span className="text-2xl font-bold text-foreground">{property.sqft}</span>
-                    <span className="text-sm text-muted-foreground">sqft</span>
+                    <span className="text-sm text-muted-foreground">{t('sqft')}</span>
                   </div>
+                  {property.floor !== undefined && property.floor !== null && (
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl font-bold text-foreground">{property.floor}</span>
+                      <span className="text-sm text-muted-foreground">{t('floor')}</span>
+                    </div>
+                  )}
+                  {property.living_rooms !== undefined && property.living_rooms !== null && property.living_rooms > 0 && (
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl font-bold text-foreground">{property.living_rooms}</span>
+                      <span className="text-sm text-muted-foreground">{t('livingRooms')}</span>
+                    </div>
+                  )}
+                  {property.kitchen !== undefined && property.kitchen !== null && property.kitchen > 0 && (
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl font-bold text-foreground">{property.kitchen}</span>
+                      <span className="text-sm text-muted-foreground">{t('kitchen')}</span>
+                    </div>
+                  )}
+                  {property.balcony !== undefined && property.balcony !== null && property.balcony > 0 && (
+                    <div className="flex flex-col items-center">
+                      <span className="text-2xl font-bold text-foreground">{property.balcony}</span>
+                      <span className="text-sm text-muted-foreground">{property.balcony > 1 ? t('balconies') : t('balcony')}</span>
+                    </div>
+                  )}
                 </div>
               </Card>
 

@@ -47,9 +47,13 @@ const translations = {
     applyFilters: 'Apply Filters',
 
     // Property
-    beds: 'Beds',
-    baths: 'Baths',
+    baths: 'Bathrooms',
     sqft: 'sqft',
+    floor: 'Floor',
+    livingRooms: 'Living Rooms',
+    kitchen: 'Kitchen',
+    balcony: 'Balcony',
+    balconies: 'Balconies',
     viewDetails: 'View Details',
     backToListings: 'Back to Listings',
     description: 'Description',
@@ -171,9 +175,13 @@ const translations = {
     applyFilters: 'Apliko Filtrat',
 
     // Property
-    beds: 'Shtretër',
     baths: 'Banjo',
     sqft: 'm²',
+    floor: 'Kati',
+    livingRooms: 'Dhoma Ndenjeje',
+    kitchen: 'Kuzhinë',
+    balcony: 'Ballkon',
+    balconies: 'Ballkone',
     viewDetails: 'Shiko Detajet',
     backToListings: 'Kthehu te Listat',
     description: 'Përshkrimi',

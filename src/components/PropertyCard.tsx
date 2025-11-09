@@ -14,10 +14,14 @@ interface PropertyCardProps {
   beds: number;
   baths: number;
   sqft: number;
+  floor?: number;
+  living_rooms?: number;
+  kitchen?: number;
+  balcony?: number;
   status?: "For Sale" | "For Rent";
 }
 
-const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, status = "For Sale" }: PropertyCardProps) => {
+const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, floor, living_rooms, kitchen, balcony, status = "For Sale" }: PropertyCardProps) => {
   const { t } = useLanguage();
   
   return (
@@ -41,10 +45,10 @@ const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, st
           <MapPin className="w-4 h-4 mr-1" />
           <span className="text-sm">{location}</span>
         </div>
-        <div className="flex items-center gap-4 mb-4 text-muted-foreground">
+        <div className="grid grid-cols-2 gap-3 mb-4 text-muted-foreground">
           <div className="flex items-center gap-1">
             <BedDouble className="w-4 h-4" />
-            <span className="text-sm">{beds} {t('beds')}</span>
+            <span className="text-sm">{beds} {t('bedrooms')}</span>
           </div>
           <div className="flex items-center gap-1">
             <Bath className="w-4 h-4" />
@@ -54,6 +58,26 @@ const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, st
             <Square className="w-4 h-4" />
             <span className="text-sm">{sqft} {t('sqft')}</span>
           </div>
+          {floor !== undefined && (
+            <div className="flex items-center gap-1">
+              <span className="text-sm">{t('floor')}: {floor}</span>
+            </div>
+          )}
+          {living_rooms !== undefined && living_rooms > 0 && (
+            <div className="flex items-center gap-1">
+              <span className="text-sm">{living_rooms} {t('livingRooms')}</span>
+            </div>
+          )}
+          {kitchen !== undefined && kitchen > 0 && (
+            <div className="flex items-center gap-1">
+              <span className="text-sm">{kitchen} {t('kitchen')}</span>
+            </div>
+          )}
+          {balcony !== undefined && balcony > 0 && (
+            <div className="flex items-center gap-1">
+              <span className="text-sm">{balcony} {balcony > 1 ? t('balconies') : t('balcony')}</span>
+            </div>
+          )}
         </div>
         <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
           <Link to={`/property/${id}`}>{t('viewDetails')}</Link>

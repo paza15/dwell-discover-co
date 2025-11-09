@@ -55,13 +55,17 @@ export type Database = {
       }
       properties: {
         Row: {
+          balcony: number | null
           baths: number
           beds: number
           created_at: string | null
           description: string | null
+          floor: number | null
           id: string
           image_url: string | null
           image_urls: string[] | null
+          kitchen: number | null
+          living_rooms: number | null
           location: string
           price: number
           property_type: string | null
@@ -71,13 +75,17 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          balcony?: number | null
           baths: number
           beds: number
           created_at?: string | null
           description?: string | null
+          floor?: number | null
           id?: string
           image_url?: string | null
           image_urls?: string[] | null
+          kitchen?: number | null
+          living_rooms?: number | null
           location: string
           price: number
           property_type?: string | null
@@ -87,13 +95,17 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          balcony?: number | null
           baths?: number
           beds?: number
           created_at?: string | null
           description?: string | null
+          floor?: number | null
           id?: string
           image_url?: string | null
           image_urls?: string[] | null
+          kitchen?: number | null
+          living_rooms?: number | null
           location?: string
           price?: number
           property_type?: string | null
