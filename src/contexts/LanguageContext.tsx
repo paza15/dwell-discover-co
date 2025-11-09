@@ -54,8 +54,30 @@ const translations = {
     backToListings: 'Back to Listings',
     description: 'Description',
     noDescription: 'No description available for this property.',
-    ourAgents: 'Our Real Estate Agents',
-    ourAgentsDescription: 'Meet our experienced team of real estate professionals ready to help you find your perfect property.',
+    
+    // Agent Section
+    ourAgents: 'Our Expert Agents',
+    ourAgentsDescription: 'Meet our dedicated team of real estate professionals committed to helping you find your perfect property',
+    
+    // Services Section
+    buyAHome: 'Buy a Home',
+    buyAHomeDesc: 'Find your perfect property from our extensive listings',
+    sellProperty: 'Sell Property',
+    sellPropertyDesc: 'Get the best value with our expert marketing strategies',
+    propertyManagement: 'Property Management',
+    propertyManagementDesc: 'Hassle-free management for your investment properties',
+    
+    // Other Sections
+    featuredProperties: 'Featured Properties',
+    featuredPropertiesDesc: 'Handpicked properties that match your dreams',
+    viewAllProperties: 'View All Properties',
+    ourServices: 'Our Services',
+    ourServicesDesc: 'Everything you need for your real estate journey',
+    readyPerfectHome: 'Ready to Find Your Perfect Home?',
+    expertTeamGuide: 'Let our expert team guide you through every step of your real estate journey',
+    getStartedToday: 'Get Started Today',
+    questionsHelp: 'Have questions? We\'re here to help',
+    trustedPartnerFooter: 'Your trusted partner in real estate',
 
     // Buy Page
     propertiesForSale: 'Properties For Sale',
@@ -156,8 +178,30 @@ const translations = {
     backToListings: 'Kthehu te Listat',
     description: 'Përshkrimi',
     noDescription: 'Nuk ka përshkrim të disponueshëm për këtë pronë.',
-    ourAgents: 'Agjentët Tanë të Pasurive të Paluajtshme',
-    ourAgentsDescription: 'Njihuni me ekipin tonë të përvuarëshem të profesionistëve të pasurive të paluajtshme të gatshëm t\'ju ndihmojnë të gjeni pronën tuaj të përsosur.',
+    
+    // Agent Section
+    ourAgents: 'Agjentët Tanë Ekspertë',
+    ourAgentsDescription: 'Takoni ekipin tonë të dedikuar të profesionistëve të pasurive të paluajtshme të përkushtuar për t\'ju ndihmuar të gjeni pronën tuaj të përsosur',
+    
+    // Services Section
+    buyAHome: 'Blini një Shtëpi',
+    buyAHomeDesc: 'Gjeni pronën tuaj të përsosur nga listat tona të gjera',
+    sellProperty: 'Shitni Pronë',
+    sellPropertyDesc: 'Merrni vlerën më të mirë me strategjitë tona eksperte të marketingut',
+    propertyManagement: 'Menaxhimi i Pronës',
+    propertyManagementDesc: 'Menaxhim pa probleme për investimet tuaja',
+    
+    // Other Sections
+    featuredProperties: 'Prona të Veçanta',
+    featuredPropertiesDesc: 'Prona të përzgjedhura me kujdes që përputhen me ëndrrat tuaja',
+    viewAllProperties: 'Shiko të Gjitha Pronat',
+    ourServices: 'Shërbimet Tona',
+    ourServicesDesc: 'Gjithçka që ju nevojitet për udhëtimin tuaj në pasuritë e paluajtshme',
+    readyPerfectHome: 'Gati për të Gjetur Shtëpinë Tuaj të Përsosur?',
+    expertTeamGuide: 'Le që ekipi ynë ekspert t\'ju udhëzojë përmes çdo hapi të udhëtimit tuaj në pasuritë e paluajtshme',
+    getStartedToday: 'Filloni Sot',
+    questionsHelp: 'Keni pyetje? Jemi këtu për të ndihmuar',
+    trustedPartnerFooter: 'Partneri juaj i besueshëm në pasuritë e paluajtshme',
 
     // Buy Page
     propertiesForSale: 'Prona Për Shitje',

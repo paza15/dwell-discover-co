@@ -46,18 +46,18 @@ const Index = () => {
   const services = [
     {
       icon: Home,
-      title: "Buy a Home",
-      description: "Find your perfect property from our extensive listings",
+      titleKey: "buyAHome",
+      descriptionKey: "buyAHomeDesc",
     },
     {
       icon: TrendingUp,
-      title: "Sell Property",
-      description: "Get the best value with our expert marketing strategies",
+      titleKey: "sellProperty",
+      descriptionKey: "sellPropertyDesc",
     },
     {
       icon: Shield,
-      title: "Property Management",
-      description: "Hassle-free management for your investment properties",
+      titleKey: "propertyManagement",
+      descriptionKey: "propertyManagementDesc",
     },
   ];
 
@@ -95,14 +95,14 @@ const Index = () => {
       <section className="py-20 bg-[image:var(--gradient-light)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold gradient-text mb-4">Featured Properties</h2>
+            <h2 className="text-4xl font-bold gradient-text mb-4">{t('featuredProperties')}</h2>
             <p className="text-muted-foreground text-lg">
-              Handpicked properties that match your dreams
+              {t('featuredPropertiesDesc')}
             </p>
           </div>
           {isLoading ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading properties...</p>
+              <p className="text-muted-foreground">{t('loadingProperties')}</p>
             </div>
           ) : (
             <>
@@ -124,7 +124,7 @@ const Index = () => {
               </div>
               <div className="text-center mt-12">
                 <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-lift" asChild>
-                  <Link to="/buy">View All Properties</Link>
+                  <Link to="/buy">{t('viewAllProperties')}</Link>
                 </Button>
               </div>
             </>
@@ -136,9 +136,9 @@ const Index = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Our Services</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">{t('ourServices')}</h2>
             <p className="text-muted-foreground text-lg">
-              Everything you need for your real estate journey
+              {t('ourServicesDesc')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -147,8 +147,8 @@ const Index = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6 shadow-[var(--shadow-glow)]">
                   <service.icon className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-2xl font-semibold mb-3 text-foreground">{service.title}</h3>
-                <p className="text-muted-foreground">{service.description}</p>
+                <h3 className="text-2xl font-semibold mb-3 text-foreground">{t(service.titleKey)}</h3>
+                <p className="text-muted-foreground">{t(service.descriptionKey)}</p>
               </Card>
             ))}
           </div>
@@ -163,13 +163,13 @@ const Index = () => {
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl font-bold text-white mb-6 animate-fade-in">
-            Ready to Find Your Perfect Home?
+            {t('readyPerfectHome')}
           </h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Let our expert team guide you through every step of your real estate journey
+            {t('expertTeamGuide')}
           </p>
           <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground hover-lift shadow-[var(--shadow-elevated)]" asChild>
-            <Link to="/rent">Get Started Today</Link>
+            <Link to="/rent">{t('getStartedToday')}</Link>
           </Button>
         </div>
       </section>
@@ -183,22 +183,39 @@ const Index = () => {
               {t('ourAgentsDescription')}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <AgentCard
-              name="Agent Name"
+              name="Ardit Pashaj"
               role="Real Estate Specialist"
               image={agent1}
-              email="agent1@idealproperties.com"
+              email="ardit@idealproperties.com"
               phone="+355 69 123 4567"
-              description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
+              description={JSON.stringify({
+                en: "Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties.",
+                al: "Profesionist i dedikuar me përvojë të gjerë në tregun shqiptar të pasurive të paluajtshme, duke ndihmuar klientët të gjejnë pronat e tyre të përsosura."
+              })}
             />
             <AgentCard
-              name="Agent Name"
+              name="Elona Hoxha"
               role="Property Consultant"
               image={agent2}
-              email="agent2@idealproperties.com"
+              email="elona@idealproperties.com"
               phone="+355 69 234 5678"
-              description="Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey."
+              description={JSON.stringify({
+                en: "Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey.",
+                al: "E pasionuar për të lidhur njerëzit me shtëpitë e tyre të ëndrrave dhe për të ofruar shërbim të jashtëzakonshëm të personalizuar gjatë gjithë udhëtimit."
+              })}
+            />
+            <AgentCard
+              name="Kledi Rama"
+              role="Senior Property Advisor"
+              image={agent1}
+              email="kledi@idealproperties.com"
+              phone="+355 69 345 6789"
+              description={JSON.stringify({
+                en: "Expert advisor specializing in luxury properties and investment opportunities, committed to delivering outstanding results for every client.",
+                al: "Këshilltar ekspert i specializuar në prona luksoze dhe mundësi investimi, i përkushtuar për të ofruar rezultate të shkëlqyera për çdo klient."
+              })}
             />
           </div>
         </div>
@@ -211,25 +228,25 @@ const Index = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">{t('getInTouch')}</h2>
             <p className="text-muted-foreground text-lg">
-              Have questions? We're here to help
+              {t('questionsHelp')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <Card className="p-6 text-center border-border">
               <Phone className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2 text-foreground">Phone</h3>
+              <h3 className="font-semibold mb-2 text-foreground">{t('phone')}</h3>
               <p className="text-muted-foreground"> +355-674087114 </p>
             </Card>
             <Card className="p-6 text-center border-border">
               <Mail className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2 text-foreground">Email</h3>
+              <h3 className="font-semibold mb-2 text-foreground">{t('email')}</h3>
               <p className="text-muted-foreground">info@estatehub.com</p>
             </Card>
             <Card className="p-6 text-center border-border">
               <MapPin className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2 text-foreground">Address</h3>
+              <h3 className="font-semibold mb-2 text-foreground">{t('address')}</h3>
               <p className="text-muted-foreground">Besnik Sykja, Shkodër 4001, Albania</p>
             </Card>
           </div>
@@ -244,7 +261,7 @@ const Index = () => {
               <img src={logo} alt="iDeal Properties" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6">
-              Your trusted partner in real estate
+              {t('trustedPartnerFooter')}
             </p>
             <SocialLinks />
             <p className="text-background/50 text-sm mt-6">
