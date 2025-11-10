@@ -183,7 +183,7 @@ const Index = () => {
               {t('ourAgentsDescription')}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <AgentCard
               name="Ardit Pashaj"
               role="Real Estate Specialist"
@@ -215,6 +215,28 @@ const Index = () => {
               description={JSON.stringify({
                 en: "Expert advisor specializing in luxury properties and investment opportunities, committed to delivering outstanding results for every client.",
                 al: "Këshilltar ekspert i specializuar në prona luksoze dhe mundësi investimi, i përkushtuar për të ofruar rezultate të shkëlqyera për çdo klient."
+              })}
+            />
+            <AgentCard
+              name="Marjana Deda"
+              role="Investment Consultant"
+              image={agent2}
+              email="marjana@idealproperties.com"
+              phone="+355 69 456 7890"
+              description={JSON.stringify({
+                en: "Specializing in investment properties and commercial real estate, helping investors maximize their returns in the Albanian market.",
+                al: "E specializuar në prona investimi dhe pasuri të paluajtshme komerciale, duke ndihmuar investitorët të maksimizojnë kthimet e tyre në tregun shqiptar."
+              })}
+            />
+            <AgentCard
+              name="Gentian Muca"
+              role="Residential Expert"
+              image={agent1}
+              email="gentian@idealproperties.com"
+              phone="+355 69 567 8901"
+              description={JSON.stringify({
+                en: "Focused on residential properties with a keen eye for detail, ensuring clients find homes that perfectly match their lifestyle and budget.",
+                al: "I fokusuar në prona rezidenciale me një sy për detaje, duke siguruar që klientët të gjejnë shtëpi që përputhen plotësisht me stilin e tyre të jetesës dhe buxhetin."
               })}
             />
           </div>
