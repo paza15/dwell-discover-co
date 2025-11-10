@@ -4,15 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import PropertyCard from "@/components/PropertyCard";
 import PropertyFilters, { FilterValues } from "@/components/PropertyFilters";
-import AgentCard from "@/components/AgentCard";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
 import SocialLinks from "@/components/SocialLinks";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-white.png";
-import agent1 from "@/assets/agent-1.jpg";
-import agent2 from "@/assets/agent-2.jpg";
 import { resolvePropertyImage } from "@/lib/propertyImages";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -123,6 +120,10 @@ const Buy = () => {
                   beds={property.beds}
                   baths={property.baths}
                   sqft={property.sqft}
+                  floor={property.floor ?? undefined}
+                  living_rooms={property.living_rooms ?? undefined}
+                  kitchen={property.kitchen ?? undefined}
+                  balcony={property.balcony ?? undefined}
                   status="For Sale"
                 />
               ))}
@@ -132,36 +133,6 @@ const Buy = () => {
               <p className="text-muted-foreground text-lg">{t('noPropertiesForSale')}</p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Agents Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('ourAgents')}</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('ourAgentsDescription')}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <AgentCard
-              name="Agent Name"
-              role="Real Estate Specialist"
-              image={agent1}
-              email="agent1@idealproperties.com"
-              phone="+355 69 123 4567"
-              description="Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties."
-            />
-            <AgentCard
-              name="Agent Name"
-              role="Property Consultant"
-              image={agent2}
-              email="agent2@idealproperties.com"
-              phone="+355 69 234 5678"
-              description="Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey."
-            />
-          </div>
         </div>
       </section>
 
