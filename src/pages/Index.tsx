@@ -118,6 +118,10 @@ const Index = () => {
                     beds={property.beds}
                     baths={property.baths}
                     sqft={property.sqft}
+                    floor={property.floor ?? undefined}
+                    living_rooms={property.living_rooms ?? undefined}
+                    kitchen={property.kitchen ?? undefined}
+                    balcony={property.balcony ?? undefined}
                     status={property.status as "For Sale" | "For Rent"}
                   />
                 ))}
