@@ -6,7 +6,7 @@ import type { Tables } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BedDouble, Bath, Square, MapPin, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { BedDouble, Bath, Square, MapPin, ArrowLeft, ChevronLeft, ChevronRight, Building2, Sofa, ChefHat, Flower2 } from "lucide-react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileMenu from "@/components/MobileMenu";
 import ImageZoom from "@/components/ImageZoom";
@@ -205,24 +205,28 @@ const PropertyDetail = () => {
                   </div>
                   {property.floor !== undefined && property.floor !== null && (
                     <div className="flex flex-col items-center">
+                      <Building2 className="w-8 h-8 text-primary mb-2" />
                       <span className="text-2xl font-bold text-foreground">{property.floor}</span>
                       <span className="text-sm text-muted-foreground">{t('floor')}</span>
                     </div>
                   )}
                   {property.living_rooms !== undefined && property.living_rooms !== null && property.living_rooms > 0 && (
                     <div className="flex flex-col items-center">
+                      <Sofa className="w-8 h-8 text-primary mb-2" />
                       <span className="text-2xl font-bold text-foreground">{property.living_rooms}</span>
                       <span className="text-sm text-muted-foreground">{t('livingRooms')}</span>
                     </div>
                   )}
                   {property.kitchen !== undefined && property.kitchen !== null && property.kitchen > 0 && (
                     <div className="flex flex-col items-center">
+                      <ChefHat className="w-8 h-8 text-primary mb-2" />
                       <span className="text-2xl font-bold text-foreground">{property.kitchen}</span>
                       <span className="text-sm text-muted-foreground">{t('kitchen')}</span>
                     </div>
                   )}
                   {property.balcony !== undefined && property.balcony !== null && property.balcony > 0 && (
                     <div className="flex flex-col items-center">
+                      <Flower2 className="w-8 h-8 text-primary mb-2" />
                       <span className="text-2xl font-bold text-foreground">{property.balcony}</span>
                       <span className="text-sm text-muted-foreground">{property.balcony > 1 ? t('balconies') : t('balcony')}</span>
                     </div>

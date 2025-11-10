@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BedDouble, Bath, Square, MapPin } from "lucide-react";
+import { BedDouble, Bath, Square, MapPin, Building2, Sofa, ChefHat, Flower2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PropertyCardProps {
@@ -60,21 +60,25 @@ const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, fl
           </div>
           {floor !== undefined && (
             <div className="flex items-center gap-1">
+              <Building2 className="w-4 h-4" />
               <span className="text-sm">{t('floor')}: {floor}</span>
             </div>
           )}
           {living_rooms !== undefined && living_rooms > 0 && (
             <div className="flex items-center gap-1">
+              <Sofa className="w-4 h-4" />
               <span className="text-sm">{living_rooms} {t('livingRooms')}</span>
             </div>
           )}
           {kitchen !== undefined && kitchen > 0 && (
             <div className="flex items-center gap-1">
+              <ChefHat className="w-4 h-4" />
               <span className="text-sm">{kitchen} {t('kitchen')}</span>
             </div>
           )}
           {balcony !== undefined && balcony > 0 && (
             <div className="flex items-center gap-1">
+              <Flower2 className="w-4 h-4" />
               <span className="text-sm">{balcony} {balcony > 1 ? t('balconies') : t('balcony')}</span>
             </div>
           )}

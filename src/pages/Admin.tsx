@@ -40,6 +40,10 @@ const propertySchema = z.object({
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
   sqft: z.coerce.number().int().min(0, "Square footage must be 0 or more"),
+  floor: z.coerce.number().int().optional(),
+  living_rooms: z.coerce.number().int().min(0, "Living rooms must be 0 or more").optional(),
+  kitchen: z.coerce.number().int().min(0, "Kitchen must be 0 or more").optional(),
+  balcony: z.coerce.number().int().min(0, "Balcony must be 0 or more").optional(),
   status: z.enum(["For Sale", "For Rent", "Sold", "Rented"], {
     required_error: "Select a status",
   }),
@@ -64,6 +68,10 @@ const defaultValues = {
   beds: 3,
   baths: 2,
   sqft: 1500,
+  floor: undefined,
+  living_rooms: 1,
+  kitchen: 1,
+  balcony: 0,
   status: "For Sale" as const,
   propertyType: "House",
 };
@@ -162,6 +170,10 @@ const Admin = () => {
         beds: rest.beds,
         baths: rest.baths,
         sqft: rest.sqft,
+        floor: rest.floor ?? null,
+        living_rooms: rest.living_rooms ?? 1,
+        kitchen: rest.kitchen ?? 1,
+        balcony: rest.balcony ?? 0,
         status: rest.status,
         description: rest.description?.trim() || null,
         property_type: propertyType.trim() || 'House',
@@ -444,6 +456,58 @@ const Admin = () => {
                           <FormLabel>Square footage</FormLabel>
                           <FormControl>
                             <Input type="number" min={0} placeholder="1800" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="floor"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Floor</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="3" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="living_rooms"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Living Rooms</FormLabel>
+                          <FormControl>
+                            <Input type="number" min={0} placeholder="1" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="kitchen"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Kitchen</FormLabel>
+                          <FormControl>
+                            <Input type="number" min={0} placeholder="1" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="balcony"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Balcony</FormLabel>
+                          <FormControl>
+                            <Input type="number" min={0} placeholder="0" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
