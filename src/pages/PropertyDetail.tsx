@@ -68,16 +68,14 @@ const PropertyDetail = () => {
     );
   }
 
-  // Parse bilingual description
-  const getDescription = () => {
-    if (!property?.description) return '';
-    try {
-      const parsed = JSON.parse(property.description);
-      return language === 'al' ? (parsed.al || parsed.en || property.description) : (parsed.en || property.description);
-    } catch {
-      return property.description;
-    }
-  };
+  // Get bilingual title and description
+  const displayTitle = language === 'al' 
+    ? (property.title_al || property.title_en || property.title) 
+    : (property.title_en || property.title);
+    
+  const displayDescription = language === 'al'
+    ? (property.description_al || property.description_en || property.description)
+    : (property.description_en || property.description);
 
   return (
     <div className="min-h-screen bg-background">
@@ -176,7 +174,7 @@ const PropertyDetail = () => {
 
             {/* Details */}
             <div>
-              <h1 className="text-4xl font-bold mb-4 text-foreground">{property.title}</h1>
+              <h1 className="text-4xl font-bold mb-4 text-foreground">{displayTitle}</h1>
               <div className="flex items-center text-muted-foreground mb-6">
                 <MapPin className="w-5 h-5 mr-2" />
                 <span className="text-lg">{property.location}</span>
@@ -237,7 +235,7 @@ const PropertyDetail = () => {
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-foreground">{t('description')}</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  {getDescription() || t('noDescription')}
+                  {displayDescription || t('noDescription')}
                 </p>
               </div>
 

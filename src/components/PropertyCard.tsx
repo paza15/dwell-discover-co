@@ -10,6 +10,8 @@ interface PropertyCardProps {
   image: string;
   price: string;
   title: string;
+  title_en?: string;
+  title_al?: string;
   location: string;
   beds: number;
   baths: number;
@@ -21,8 +23,10 @@ interface PropertyCardProps {
   status?: "For Sale" | "For Rent";
 }
 
-const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, floor, living_rooms, kitchen, balcony, status = "For Sale" }: PropertyCardProps) => {
-  const { t } = useLanguage();
+const PropertyCard = ({ id, image, price, title, title_en, title_al, location, beds, baths, sqft, floor, living_rooms, kitchen, balcony, status = "For Sale" }: PropertyCardProps) => {
+  const { t, language } = useLanguage();
+  
+  const displayTitle = language === 'al' ? (title_al || title_en || title) : (title_en || title);
   
   return (
     <Card className="overflow-hidden group border-border hover-lift bg-[image:var(--gradient-card)]">
@@ -40,7 +44,7 @@ const PropertyCard = ({ id, image, price, title, location, beds, baths, sqft, fl
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-2xl font-bold text-primary">{price}</h3>
         </div>
-        <h4 className="text-xl font-semibold mb-2 text-foreground">{title}</h4>
+        <h4 className="text-xl font-semibold mb-2 text-foreground">{displayTitle}</h4>
         <div className="flex items-center text-muted-foreground mb-4">
           <MapPin className="w-4 h-4 mr-1" />
           <span className="text-sm">{location}</span>

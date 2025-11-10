@@ -33,10 +33,12 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const propertySchema = z.object({
-  title: z.string().min(3, "A title is required"),
+  title_en: z.string().min(3, "English title is required"),
+  title_al: z.string().min(3, "Albanian title is required"),
   price: z.coerce.number().positive("Enter a positive price"),
   location: z.string().min(3, "A location is required"),
-  description: z.string().optional(),
+  description_en: z.string().optional(),
+  description_al: z.string().optional(),
   beds: z.coerce.number().int().min(0, "Beds must be 0 or more"),
   baths: z.coerce.number().int().min(0, "Baths must be 0 or more"),
   sqft: z.coerce.number().int().min(0, "Square footage must be 0 or more"),
@@ -61,10 +63,12 @@ const blogSchema = z.object({
 });
 
 const defaultValues = {
-  title: "",
+  title_en: "",
+  title_al: "",
   price: 450000,
   location: "",
-  description: "",
+  description_en: "",
+  description_al: "",
   beds: 3,
   baths: 2,
   sqft: 1500,
@@ -161,10 +165,12 @@ const Admin = () => {
 
   const createListing = useMutation({
     mutationFn: async (values: PropertyFormValues) => {
-      const { propertyType, ...rest } = values;
+      const { propertyType, title_en, title_al, description_en, description_al, ...rest } = values;
 
       const payload = {
-        title: rest.title,
+        title: title_en, // Keep for backwards compatibility
+        title_en,
+        title_al,
         price: rest.price,
         location: rest.location,
         beds: rest.beds,
@@ -175,7 +181,9 @@ const Admin = () => {
         kitchen: rest.kitchen ?? 1,
         balcony: rest.balcony ?? 0,
         status: rest.status,
-        description: rest.description?.trim() || null,
+        description: description_en?.trim() || null, // Keep for backwards compatibility
+        description_en: description_en?.trim() || null,
+        description_al: description_al?.trim() || null,
         property_type: propertyType.trim() || 'House',
         image_url: uploadedImages[0] || null,
         image_urls: uploadedImages.length > 0 ? uploadedImages : null,
@@ -362,12 +370,25 @@ const Admin = () => {
                       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <FormField
                           control={propertyForm.control}
-                          name="title"
+                          name="title_en"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Title</FormLabel>
+                          <FormLabel>Title (English)</FormLabel>
                           <FormControl>
                             <Input placeholder="Modern loft downtown" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="title_al"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Title (Albanian)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Loft modern në qendër" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -535,19 +556,34 @@ const Admin = () => {
                         </div>
                       </div>
 
-                      <FormField
-                        control={propertyForm.control}
-                        name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea rows={5} placeholder="Highlight the best features of this listing" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                      />
+                      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <FormField
+                          control={propertyForm.control}
+                          name="description_en"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description (English)</FormLabel>
+                          <FormControl>
+                            <Textarea rows={5} placeholder="Highlight the best features of this listing" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="description_al"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description (Albanian)</FormLabel>
+                          <FormControl>
+                            <Textarea rows={5} placeholder="Theksoni karakteristikat më të mira të kësaj prone" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                      </div>
 
                       <Button type="submit" className="w-full md:w-auto" disabled={createListing.isPending}>
                         {createListing.isPending ? (

@@ -189,59 +189,39 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <AgentCard
-              name="Ardit Pashaj"
-              role="Real Estate Specialist"
+              name="Arben Pazari"
+              role="Managing Director"
               image={agent1}
-              email="ardit@idealproperties.com"
+              email="info@idealprop.al"
               phone="+355 69 123 4567"
-              description={JSON.stringify({
-                en: "Dedicated professional with extensive experience in the Albanian real estate market, helping clients find their perfect properties.",
-                al: "Profesionist i dedikuar me përvojë të gjerë në tregun shqiptar të pasurive të paluajtshme, duke ndihmuar klientët të gjejnë pronat e tyre të përsosura."
-              })}
             />
             <AgentCard
               name="Elona Hoxha"
-              role="Property Consultant"
+              role="Senior Sales Agent"
               image={agent2}
-              email="elona@idealproperties.com"
+              email="elona@idealprop.al"
               phone="+355 69 234 5678"
-              description={JSON.stringify({
-                en: "Passionate about connecting people with their dream homes and providing exceptional personalized service throughout the journey.",
-                al: "E pasionuar për të lidhur njerëzit me shtëpitë e tyre të ëndrrave dhe për të ofruar shërbim të jashtëzakonshëm të personalizuar gjatë gjithë udhëtimit."
-              })}
             />
             <AgentCard
-              name="Kledi Rama"
-              role="Senior Property Advisor"
+              name="Marko Dervishi"
+              role="Property Consultant"
               image={agent1}
-              email="kledi@idealproperties.com"
+              email="marko@idealprop.al"
               phone="+355 69 345 6789"
-              description={JSON.stringify({
-                en: "Expert advisor specializing in luxury properties and investment opportunities, committed to delivering outstanding results for every client.",
-                al: "Këshilltar ekspert i specializuar në prona luksoze dhe mundësi investimi, i përkushtuar për të ofruar rezultate të shkëlqyera për çdo klient."
-              })}
             />
             <AgentCard
-              name="Marjana Deda"
-              role="Investment Consultant"
+              name="Sara Krasniqi"
+              role="Rental Specialist"
               image={agent2}
-              email="marjana@idealproperties.com"
+              email="sara@idealprop.al"
               phone="+355 69 456 7890"
-              description={JSON.stringify({
-                en: "Specializing in investment properties and commercial real estate, helping investors maximize their returns in the Albanian market.",
-                al: "E specializuar në prona investimi dhe pasuri të paluajtshme komerciale, duke ndihmuar investitorët të maksimizojnë kthimet e tyre në tregun shqiptar."
-              })}
             />
             <AgentCard
-              name="Gentian Muca"
-              role="Residential Expert"
+              name="Altin Shehu"
+              role="Investment Advisor"
               image={agent1}
-              email="gentian@idealproperties.com"
+              email="altin@idealprop.al"
               phone="+355 69 567 8901"
-              description={JSON.stringify({
-                en: "Focused on residential properties with a keen eye for detail, ensuring clients find homes that perfectly match their lifestyle and budget.",
-                al: "I fokusuar në prona rezidenciale me një sy për detaje, duke siguruar që klientët të gjejnë shtëpi që përputhen plotësisht me stilin e tyre të jetesës dhe buxhetin."
-              })}
             />
           </div>
         </div>

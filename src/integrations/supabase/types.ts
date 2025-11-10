@@ -60,6 +60,8 @@ export type Database = {
           beds: number
           created_at: string | null
           description: string | null
+          description_al: string | null
+          description_en: string | null
           floor: number | null
           id: string
           image_url: string | null
@@ -72,6 +74,8 @@ export type Database = {
           sqft: number
           status: string
           title: string
+          title_al: string | null
+          title_en: string | null
           updated_at: string | null
         }
         Insert: {
@@ -80,6 +84,8 @@ export type Database = {
           beds: number
           created_at?: string | null
           description?: string | null
+          description_al?: string | null
+          description_en?: string | null
           floor?: number | null
           id?: string
           image_url?: string | null
@@ -92,6 +98,8 @@ export type Database = {
           sqft: number
           status: string
           title: string
+          title_al?: string | null
+          title_en?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -100,6 +108,8 @@ export type Database = {
           beds?: number
           created_at?: string | null
           description?: string | null
+          description_al?: string | null
+          description_en?: string | null
           floor?: number | null
           id?: string
           image_url?: string | null
@@ -112,6 +122,8 @@ export type Database = {
           sqft?: number
           status?: string
           title?: string
+          title_al?: string | null
+          title_en?: string | null
           updated_at?: string | null
         }
         Relationships: []
