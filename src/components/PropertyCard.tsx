@@ -29,7 +29,11 @@ const PropertyCard = ({ id, image, price, price_eur, price_lek, title, title_en,
   const { t, language } = useLanguage();
   
   const displayTitle = language === 'al' ? (title_al || title_en || title) : (title_en || title);
-  const displayPrice = language === 'al' ? (price_lek || price) : (price_eur || price);
+  
+  // Format price based on language
+  const displayPrice = language === 'al' 
+    ? (price_lek ? `${Math.floor(parseFloat(price_lek)).toLocaleString()} Lek` : price)
+    : (price_eur ? `€${Math.floor(parseFloat(price_eur)).toLocaleString()}` : price);
   
   return (
     <Card className="overflow-hidden group border-border hover-lift bg-[image:var(--gradient-card)]">
