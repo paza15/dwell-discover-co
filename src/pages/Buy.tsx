@@ -114,7 +114,7 @@ const Buy = () => {
                   key={property.id}
                   id={property.id}
                   image={resolvePropertyImage(property.image_url, property.image_urls)}
-                  price={`$${property.price.toLocaleString()}`}
+                  price={`€${Math.floor(property.price).toLocaleString()}`}
                   price_eur={property.price_eur ?? undefined}
                   price_lek={property.price_lek ?? undefined}
                   title={property.title}

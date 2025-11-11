@@ -37,10 +37,11 @@ const Index = () => {
 
   // Format price based on status
   const formatPrice = (price: number, status: string) => {
+    const formattedPrice = Math.floor(price).toLocaleString();
     if (status === 'For Rent') {
-      return `$${price.toLocaleString()}/mo`;
+      return `€${formattedPrice}/mo`;
     }
-    return `$${price.toLocaleString()}`;
+    return `€${formattedPrice}`;
   };
 
   const services = [

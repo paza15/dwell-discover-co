@@ -78,8 +78,8 @@ const PropertyDetail = () => {
     : (property.description_en || property.description);
   
   const displayPrice = language === 'al' 
-    ? (property.price_lek || `$${property.price.toLocaleString()}`) 
-    : (property.price_eur || `$${property.price.toLocaleString()}`);
+    ? (property.price_lek || `${Math.floor(property.price).toLocaleString()} Lek`) 
+    : (property.price_eur || `€${Math.floor(property.price).toLocaleString()}`);
 
   return (
     <div className="min-h-screen bg-background">
