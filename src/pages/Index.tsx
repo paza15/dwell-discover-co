@@ -194,39 +194,39 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <AgentCard
-              name="Arben Pazari"
-              role="Managing Director"
+              name="Kevin Berohiti"
+              role="Broker"
               image={agent1}
-              email="info@idealprop.al"
-              phone="+355 69 123 4567"
+              email="kevinberohiti98@gmail.com"
+              phone="+355 67 498 7714"
             />
             <AgentCard
-              name="Elona Hoxha"
-              role="Senior Sales Agent"
+              name="Redi Osmanaga"
+              role="Broker"
               image={agent2}
-              email="elona@idealprop.al"
-              phone="+355 69 234 5678"
+              email="redi1osmanaga@gmail.com"
+              phone="+355 67 530 4172"
             />
             <AgentCard
-              name="Marko Dervishi"
-              role="Property Consultant"
+              name="Brisilda Delia"
+              role="Rental Specialist"
               image={agent1}
-              email="marko@idealprop.al"
-              phone="+355 69 345 6789"
+              email="brisilda.delia@yahoo.com"
+              phone="+355 68 909 0002"
             />
             <AgentCard
-              name="Sara Krasniqi"
+              name="Hivjon Kukaj"
               role="Rental Specialist"
               image={agent2}
-              email="sara@idealprop.al"
-              phone="+355 69 456 7890"
+              email="hivjonkukaj3@gmail.com"
+              phone="+355 69 206 5611"
             />
             <AgentCard
-              name="Altin Shehu"
-              role="Investment Advisor"
+              name="Brian Gjerga"
+              role="Rental Specialist"
               image={agent1}
-              email="altin@idealprop.al"
-              phone="+355 69 567 8901"
+              email="briangjerga95@gmail.com"
+              phone="+355 69 301 1151"
             />
           </div>
         </div>
