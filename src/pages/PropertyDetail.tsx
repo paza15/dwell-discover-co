@@ -76,6 +76,10 @@ const PropertyDetail = () => {
   const displayDescription = language === 'al'
     ? (property.description_al || property.description_en || property.description)
     : (property.description_en || property.description);
+  
+  const displayPrice = language === 'al' 
+    ? (property.price_lek || `$${property.price.toLocaleString()}`) 
+    : (property.price_eur || `$${property.price.toLocaleString()}`);
 
   return (
     <div className="min-h-screen bg-background">
@@ -181,7 +185,7 @@ const PropertyDetail = () => {
               </div>
 
               <div className="text-5xl font-bold text-primary mb-8">
-                ${property.price.toLocaleString()}{property.status === 'For Rent' ? '/mo' : ''}
+                {displayPrice}{property.status === 'For Rent' ? '/mo' : ''}
               </div>
 
               <Card className="p-6 mb-8">

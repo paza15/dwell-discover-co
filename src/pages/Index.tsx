@@ -113,7 +113,11 @@ const Index = () => {
                     id={property.id}
                     image={resolvePropertyImage(property.image_url, property.image_urls)}
                     price={formatPrice(property.price, property.status)}
+                    price_eur={property.price_eur ?? undefined}
+                    price_lek={property.price_lek ?? undefined}
                     title={property.title}
+                    title_en={property.title_en ?? undefined}
+                    title_al={property.title_al ?? undefined}
                     location={property.location}
                     beds={property.beds}
                     baths={property.baths}

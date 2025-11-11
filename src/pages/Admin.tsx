@@ -36,6 +36,8 @@ const propertySchema = z.object({
   title_en: z.string().min(3, "English title is required"),
   title_al: z.string().min(3, "Albanian title is required"),
   price: z.coerce.number().positive("Enter a positive price"),
+  price_eur: z.string().min(1, "Euro price is required"),
+  price_lek: z.string().min(1, "Lek price is required"),
   location: z.string().min(3, "A location is required"),
   description_en: z.string().optional(),
   description_al: z.string().optional(),
@@ -54,6 +56,7 @@ const propertySchema = z.object({
 
 const blogSchema = z.object({
   title: z.string().min(3, "A title is required"),
+  slug: z.string().min(3, "A slug is required"),
   excerpt: z.string().min(10, "An excerpt is required"),
   content: z.string().min(50, "Content must be at least 50 characters"),
   author: z.string().min(2, "Author name is required"),
@@ -66,6 +69,8 @@ const defaultValues = {
   title_en: "",
   title_al: "",
   price: 450000,
+  price_eur: "",
+  price_lek: "",
   location: "",
   description_en: "",
   description_al: "",
@@ -82,6 +87,7 @@ const defaultValues = {
 
 const defaultBlogValues = {
   title: "",
+  slug: "",
   excerpt: "",
   content: "",
   author: "",
@@ -165,13 +171,15 @@ const Admin = () => {
 
   const createListing = useMutation({
     mutationFn: async (values: PropertyFormValues) => {
-      const { propertyType, title_en, title_al, description_en, description_al, ...rest } = values;
+      const { propertyType, title_en, title_al, description_en, description_al, price_eur, price_lek, ...rest } = values;
 
       const payload = {
         title: title_en, // Keep for backwards compatibility
         title_en,
         title_al,
         price: rest.price,
+        price_eur,
+        price_lek,
         location: rest.location,
         beds: rest.beds,
         baths: rest.baths,
@@ -242,6 +250,7 @@ const Admin = () => {
     mutationFn: async (values: BlogFormValues) => {
       const payload = {
         title: values.title,
+        slug: values.slug,
         excerpt: values.excerpt,
         content: values.content,
         author: values.author,
@@ -399,9 +408,35 @@ const Admin = () => {
                           name="price"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Price</FormLabel>
+                          <FormLabel>Price (Numeric)</FormLabel>
                           <FormControl>
                             <Input type="number" step="0.01" min={0} placeholder="450000" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="price_eur"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Price (Euro)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="€250,000" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                        />
+                        <FormField
+                          control={propertyForm.control}
+                          name="price_lek"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Price (Lek)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="25,000,000 Lek" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -659,6 +694,19 @@ const Admin = () => {
                               <FormLabel>Title</FormLabel>
                               <FormControl>
                                 <Input placeholder="Top 10 Tips for First-Time Home Buyers" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={blogForm.control}
+                          name="slug"
+                          render={({ field }) => (
+                            <FormItem className="md:col-span-2">
+                              <FormLabel>Slug (URL)</FormLabel>
+                              <FormControl>
+                                <Input placeholder="top-10-tips-first-time-home-buyers" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>

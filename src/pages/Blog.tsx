@@ -115,7 +115,7 @@ const Blog = () => {
                       className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full"
                       asChild
                     >
-                      <Link to={`/blog/${post.id}`}>
+                      <Link to={`/blog/${post.slug}`}>
                         {t('readMore')} <ArrowRight className="w-4 h-4 ml-2" />
                       </Link>
                     </Button>

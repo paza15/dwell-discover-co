@@ -8,17 +8,17 @@ import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo-new.png";
 
 const BlogDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const { t } = useLanguage();
 
   const { data: post, isLoading } = useQuery({
-    queryKey: ["blog-post", id],
+    queryKey: ["blog-post", slug],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("blog_posts")
         .select("*")
-        .eq("id", id)
+        .eq("slug", slug)
         .maybeSingle();
 
       if (error) throw error;

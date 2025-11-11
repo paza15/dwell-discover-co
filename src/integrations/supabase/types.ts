@@ -24,6 +24,7 @@ export type Database = {
           id: string
           image_url: string | null
           published: boolean
+          slug: string
           title: string
           updated_at: string
         }
@@ -36,6 +37,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published?: boolean
+          slug: string
           title: string
           updated_at?: string
         }
@@ -48,6 +50,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published?: boolean
+          slug?: string
           title?: string
           updated_at?: string
         }
@@ -70,6 +73,8 @@ export type Database = {
           living_rooms: number | null
           location: string
           price: number
+          price_eur: string | null
+          price_lek: string | null
           property_type: string | null
           sqft: number
           status: string
@@ -94,6 +99,8 @@ export type Database = {
           living_rooms?: number | null
           location: string
           price: number
+          price_eur?: string | null
+          price_lek?: string | null
           property_type?: string | null
           sqft: number
           status: string
@@ -118,6 +125,8 @@ export type Database = {
           living_rooms?: number | null
           location?: string
           price?: number
+          price_eur?: string | null
+          price_lek?: string | null
           property_type?: string | null
           sqft?: number
           status?: string

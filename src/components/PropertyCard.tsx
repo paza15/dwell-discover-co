@@ -9,6 +9,8 @@ interface PropertyCardProps {
   id: string;
   image: string;
   price: string;
+  price_eur?: string;
+  price_lek?: string;
   title: string;
   title_en?: string;
   title_al?: string;
@@ -23,10 +25,11 @@ interface PropertyCardProps {
   status?: "For Sale" | "For Rent";
 }
 
-const PropertyCard = ({ id, image, price, title, title_en, title_al, location, beds, baths, sqft, floor, living_rooms, kitchen, balcony, status = "For Sale" }: PropertyCardProps) => {
+const PropertyCard = ({ id, image, price, price_eur, price_lek, title, title_en, title_al, location, beds, baths, sqft, floor, living_rooms, kitchen, balcony, status = "For Sale" }: PropertyCardProps) => {
   const { t, language } = useLanguage();
   
   const displayTitle = language === 'al' ? (title_al || title_en || title) : (title_en || title);
+  const displayPrice = language === 'al' ? (price_lek || price) : (price_eur || price);
   
   return (
     <Card className="overflow-hidden group border-border hover-lift bg-[image:var(--gradient-card)]">
@@ -42,7 +45,7 @@ const PropertyCard = ({ id, image, price, title, title_en, title_al, location, b
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-2xl font-bold text-primary">{price}</h3>
+          <h3 className="text-2xl font-bold text-primary">{displayPrice}</h3>
         </div>
         <h4 className="text-xl font-semibold mb-2 text-foreground">{displayTitle}</h4>
         <div className="flex items-center text-muted-foreground mb-4">
